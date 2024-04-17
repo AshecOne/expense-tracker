@@ -93,7 +93,7 @@ const SignIn: React.FunctionComponent<ISignInProps> = (props) => {
         </button>
       </form>
       <p className="mt-4 text-black">
-        Don't have an account? {' '}
+        Don&apos;t have an account? {' '}
         <Link
           href="/signup"
           className="text-black hover:text-blue-600 hover:underline"
