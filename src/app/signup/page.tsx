@@ -64,7 +64,7 @@ const SignUp: React.FunctionComponent<ISignUpProps> = (props) => {
               id="name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full px-3 py-2 border text-black border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-600"
+              className="w-full px-3 py-2 border text-black border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-600"
               required
             />
           </div>
@@ -80,7 +80,7 @@ const SignUp: React.FunctionComponent<ISignUpProps> = (props) => {
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-3 py-2 border text-black border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-600"
+              className="w-full px-3 py-2 border text-black border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-600"
               required
             />
           </div>
@@ -97,7 +97,7 @@ const SignUp: React.FunctionComponent<ISignUpProps> = (props) => {
                 id="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-3 py-2 border text-black border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-purple-600"
+                className="w-full px-3 py-2 border text-black border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-600"
                 required
               />
               <button
