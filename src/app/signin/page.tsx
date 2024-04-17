@@ -22,7 +22,7 @@ const SignIn: React.FunctionComponent<ISignInProps> = (props) => {
     e.preventDefault();
     console.log("Attempting to sign in with email:", email);
     try {
-      const response = await axios.post("http://localhost:3400/users/signin", {
+      const response = await axios.post("https://secure-basin-94383-7efd7c1abae1.herokuapp.com/users/signin", {
         email,
         password,
       });

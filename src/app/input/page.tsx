@@ -28,7 +28,7 @@ const Input: React.FunctionComponent<IInputProps> = (props) => {
       userId: user.id,
     });
     try {
-      await axios.post("http://localhost:3400/users/transactions", {
+      await axios.post("https://secure-basin-94383-7efd7c1abae1.herokuapp.com/users/transactions", {
         type,
         amount: parseFloat(amount),
         description,

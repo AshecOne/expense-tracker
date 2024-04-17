@@ -31,7 +31,7 @@ const Sortir: React.FunctionComponent<ISortirProps> = (props) => {
   const fetchTransactions = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3400/users/transactions?userId=${user.id}&orderBy=date&order=desc`
+        `https://secure-basin-94383-7efd7c1abae1.herokuapp.com/users/transactions?userId=${user.id}&orderBy=date&order=desc`
       );
       console.log(response.data);
 
@@ -63,7 +63,7 @@ const Sortir: React.FunctionComponent<ISortirProps> = (props) => {
   const handleFilter = async () => {
     console.log("Filtering with", { dateRange, type, category });
     try {
-      let url = `http://localhost:3400/users/transactions/filter?userId=${user.id}`;
+      let url = `https://secure-basin-94383-7efd7c1abae1.herokuapp.com/users/transactions/filter?userId=${user.id}`;
 
       if (dateRange) {
         const [startDate, endDate] = dateRange.split(" ");

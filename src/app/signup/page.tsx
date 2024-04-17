@@ -26,7 +26,7 @@ const SignUp: React.FunctionComponent<ISignUpProps> = (props) => {
       password,
     });
     try {
-      const response = await axios.post("http://localhost:3400/users/signup", {
+      const response = await axios.post("https://secure-basin-94383-7efd7c1abae1.herokuapp.com/users/signup", {
         name,
         email,
         password,
@@ -49,6 +49,7 @@ const SignUp: React.FunctionComponent<ISignUpProps> = (props) => {
       }
     }
   };
+  
 
   return (
     <GuestRoute>

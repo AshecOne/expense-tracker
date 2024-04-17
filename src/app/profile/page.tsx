@@ -22,7 +22,7 @@ const Profil: React.FunctionComponent<IProfilProps> = (props) => {
       console.log(`Fetching user data for user ID: ${user.id}`);
       try {
         const response = await axios.get(
-          `http://localhost:3400/users/?userId=${user.id}`
+          `https://secure-basin-94383-7efd7c1abae1.herokuapp.com/users/?userId=${user.id}`
         );
         console.log("Response from server:", response.data);
         const { id_user, name, email } = response.data[0];
