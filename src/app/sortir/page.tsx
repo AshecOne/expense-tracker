@@ -31,7 +31,10 @@ const Sortir: React.FunctionComponent<ISortirProps> = (props) => {
   const fetchTransactions = async () => {
     try {
       const response = await axios.get(
-        `https://secure-basin-94383-7efd7c1abae1.herokuapp.com/users/transactions?userId=${user.id}&orderBy=date&order=desc`
+        `https://secure-basin-94383-7efd7c1abae1.herokuapp.com/users/transactions?userId=${user.id}&orderBy=date&order=desc`,
+        {
+          withCredentials: true,
+        }
       );
       console.log(response.data);
 
@@ -78,7 +81,9 @@ const Sortir: React.FunctionComponent<ISortirProps> = (props) => {
         url += `&category=${category}`;
       }
 
-      const response = await axios.get(url);
+      const response = await axios.get(url, {
+        withCredentials: true,
+      });
       console.log("Filtered data", response.data);
       const convertedTransactions = response.data.map(
         (transaction: ITransaction) => ({

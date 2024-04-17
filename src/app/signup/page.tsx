@@ -26,13 +26,17 @@ const SignUp: React.FunctionComponent<ISignUpProps> = (props) => {
       password,
     });
     try {
-      const response = await axios.post("https://secure-basin-94383-7efd7c1abae1.herokuapp.com/users/signup", {
-        name,
-        email,
-        password,
-      }, {
-        withCredentials: true
-      });
+      const response = await axios.post(
+        "https://secure-basin-94383-7efd7c1abae1.herokuapp.com/users/signup",
+        {
+          name,
+          email,
+          password,
+        },
+        {
+          withCredentials: true,
+        }
+      );
       console.log(response.data);
       router.push("/signin");
     } catch (error: unknown) {
@@ -51,24 +55,20 @@ const SignUp: React.FunctionComponent<ISignUpProps> = (props) => {
       }
     }
   };
-  
 
   return (
     <GuestRoute>
       <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-white to-blue-400">
         <h1 className="text-4xl font-bold text-black mb-8">Sign Up</h1>
         {errorMessage && (
-        <p className="text-red-500 mb-4 text-xl font-bold">{errorMessage}</p>
-      )}
+          <p className="text-red-500 mb-4 text-xl font-bold">{errorMessage}</p>
+        )}
         <form
           onSubmit={handleSubmit}
           className="w-full max-w-sm bg-white p-8 rounded-lg shadow-md"
         >
           <div className="mb-4">
-            <label
-              htmlFor="name"
-              className="block mb-2 text-black font-bold"
-            >
+            <label htmlFor="name" className="block mb-2 text-black font-bold">
               Name
             </label>
             <input
@@ -81,10 +81,7 @@ const SignUp: React.FunctionComponent<ISignUpProps> = (props) => {
             />
           </div>
           <div className="mb-4">
-            <label
-              htmlFor="email"
-              className="block mb-2 text-black font-bold"
-            >
+            <label htmlFor="email" className="block mb-2 text-black font-bold">
               Email
             </label>
             <input

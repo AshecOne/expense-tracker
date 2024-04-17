@@ -36,6 +36,9 @@ const Setting: React.FunctionComponent<ISettingProps> = (props) => {
         {
           name,
           email,
+        },
+        {
+          withCredentials: true,
         }
       );
       dispatch(
@@ -76,6 +79,9 @@ const Setting: React.FunctionComponent<ISettingProps> = (props) => {
         `https://secure-basin-94383-7efd7c1abae1.herokuapp.com/users/${user.id}/change-password`,
         {
           password,
+        },
+        {
+          withCredentials: true,
         }
       );
       console.log("Password changed successfully");

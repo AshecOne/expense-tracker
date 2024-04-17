@@ -35,7 +35,10 @@ const Input: React.FunctionComponent<IInputProps> = (props) => {
         category,
         date,
         userId: user.id,
-      });
+      },
+          {
+            withCredentials: true,
+          });
       console.log("Transaction added successfully");
       alert("Transaction added successfully");
       setAmount("");

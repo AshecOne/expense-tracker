@@ -22,12 +22,16 @@ const SignIn: React.FunctionComponent<ISignInProps> = (props) => {
     e.preventDefault();
     console.log("Attempting to sign in with email:", email);
     try {
-      const response = await axios.post("https://secure-basin-94383-7efd7c1abae1.herokuapp.com/users/signin", {
-        email,
-        password,
-      }, {
-        withCredentials: true
-      });
+      const response = await axios.post(
+        "https://secure-basin-94383-7efd7c1abae1.herokuapp.com/users/signin",
+        {
+          email,
+          password,
+        },
+        {
+          withCredentials: true,
+        }
+      );
       console.log(response.data);
       dispatch(setUser(response.data.user));
       if (typeof window !== "undefined") {
@@ -56,8 +60,8 @@ const SignIn: React.FunctionComponent<ISignInProps> = (props) => {
       <div className="flex flex-col items-center justify-center min-h-screen  bg-gradient-to-br from-white to-blue-400">
         <h1 className="text-4xl font-bold text-black mb-8">Sign In</h1>
         {errorMessage && (
-        <p className="text-red-500 mb-4 font-bold text-xl">{errorMessage}</p>
-      )}
+          <p className="text-red-500 mb-4 font-bold text-xl">{errorMessage}</p>
+        )}
         <form
           onSubmit={handleSubmit}
           className="w-full max-w-sm bg-white p-8 rounded-lg shadow-md"
