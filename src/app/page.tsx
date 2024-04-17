@@ -17,7 +17,7 @@ export default function Home() {
         </p>
         <div className="mb-8">
           <Image
-            src="/logo.png"
+            src="logo.png"
             alt="Money Tracker Logo"
             width={200}
             height={200}
