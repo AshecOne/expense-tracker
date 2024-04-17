@@ -24,13 +24,13 @@ const UserMenu: React.FC<IUserMenuProps> = ({ onClose }) => {
   return (
     <div className="absolute top-full right-0 mt-2 w-30 bg-white rounded-md shadow-lg z-10">
       <button
-        className="flex items-center justify-start w-full text-left px-4 py-2 text-black hover:bg-gray-100 hover:rounded-md"
+        className="flex items-center justify-start w-full text-left px-4 py-2 text-black hover:font-semibold hover:bg-gray-100 hover:rounded-md"
         onClick={handleSettings}
       >
         <MdSettings className="mr-2"/> Settings
       </button>
       <button
-        className="flex items-center justify-start w-full text-left px-4 py-2 text-black hover:bg-gray-100 hover:rounded-md"
+        className="flex items-center justify-start w-full text-left px-4 py-2 text-black hover:bg-gray-100 hover:rounded-md hover:font-semibold"
         onClick={handleLogout}
       >
         <MdExitToApp className="mr-2"/> Logout

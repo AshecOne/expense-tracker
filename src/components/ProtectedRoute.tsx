@@ -7,7 +7,7 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const isLoggedIn = useAppSelector((state: any) => state.user.isLoggedIn);
 
   if (!isLoggedIn) {
-    router.push("/signin");
+    router.push("/");
     return null;
   }
 

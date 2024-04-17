@@ -13,7 +13,7 @@ const Navbar: React.FunctionComponent<INavbarProps> = (props) => {
           <FiFile size={24} className="text-black" />
         </Link>
         <Link href="/input" aria-label="Input" className="focus:outline-none">
-          <div className="w-12 h-12 rounded-full bg-red-500 flex items-center justify-center">
+          <div className="w-12 h-12 rounded-full bg-red-600 flex items-center justify-center">
             <FiPlus size={24} color="white" />
           </div>
         </Link>

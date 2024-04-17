@@ -86,11 +86,11 @@ const Input: React.FunctionComponent<IInputProps> = (props) => {
   return (
     <ProtectedRoute>
     <NavbarLayout>
-      <div className="max-w-sm mx-auto px-4 py-8">
-        <h2 className="text-2xl font-bold mb-4">Add New Expense</h2>
+      <div className="max-w-sm mx-auto px-4 py-8 bg-gradient-to-br from-white to-blue-400">
+        <h2 className="text-2xl font-bold mb-4 text-black">Add New Expense</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label htmlFor="type" className="block mb-2">
+            <label htmlFor="type" className="block mb-2 text-black font-medium">
               Type:
             </label>
             <div className="flex items-center">
@@ -98,7 +98,7 @@ const Input: React.FunctionComponent<IInputProps> = (props) => {
                 type="button"
                 className={`px-4 py-2 rounded-l ${
                   type === "expense"
-                    ? "bg-purple-500 text-white"
+                    ? "bg-blue-500 text-white"
                     : "bg-gray-300 text-black"
                 }`}
                 onClick={() => handleTypeChange("expense")}
@@ -109,7 +109,7 @@ const Input: React.FunctionComponent<IInputProps> = (props) => {
                 type="button"
                 className={`px-4 py-2 rounded-r ${
                   type === "income"
-                    ? "bg-purple-500 text-white"
+                    ? "bg-blue-500 text-white"
                     : "bg-gray-300 text-black"
                 }`}
                 onClick={() => handleTypeChange("income")}
@@ -119,7 +119,7 @@ const Input: React.FunctionComponent<IInputProps> = (props) => {
             </div>
           </div>
           <div className="mb-4">
-            <label htmlFor="date" className="block mb-2">
+            <label htmlFor="date" className="block mb-2 text-black font-medium">
               Date:
             </label>
             <input
@@ -132,7 +132,7 @@ const Input: React.FunctionComponent<IInputProps> = (props) => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="category" className="block mb-2">
+            <label htmlFor="category" className="block mb-2 text-black font-medium">
               Category:
             </label>
             <input
@@ -145,7 +145,7 @@ const Input: React.FunctionComponent<IInputProps> = (props) => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="description" className="block mb-2">
+            <label htmlFor="description" className="block mb-2 text-black font-medium">
               Description (Optional):
             </label>
             <input
@@ -157,7 +157,7 @@ const Input: React.FunctionComponent<IInputProps> = (props) => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="amount" className="block mb-2">
+            <label htmlFor="amount" className="block mb-2 text-black font-medium">
               Total:
             </label>
             <input
@@ -184,7 +184,7 @@ const Input: React.FunctionComponent<IInputProps> = (props) => {
             </button>
             <button
               type="submit"
-              className="px-4 py-2 bg-purple-500 text-white rounded"
+              className="px-4 py-2 bg-blue-600 text-white rounded"
             >
               Save
             </button>

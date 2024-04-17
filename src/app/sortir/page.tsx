@@ -94,8 +94,8 @@ const Sortir: React.FunctionComponent<ISortirProps> = (props) => {
   return (
     <ProtectedRoute>
       <NavbarLayout>
-        <div className="container mx-auto px-4 pt-8 pb-20">
-          <h2 className="text-2xl font-bold mb-4">Transactions</h2>
+        <div className="container mx-auto px-4 min-h-screen pt-8 pb-20 bg-gradient-to-br from-white to-blue-400">
+          <h2 className="text-2xl font-bold mb-4 text-black">Transactions</h2>
           <div className="bg-white p-4 rounded shadow mb-8">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div>

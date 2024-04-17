@@ -38,8 +38,8 @@ const SignIn: React.FunctionComponent<ISignInProps> = (props) => {
   };
   return (
     <GuestRoute>
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-purple-600 to-blue-500">
-      <h1 className="text-4xl font-bold text-white mb-8">Sign In</h1>
+    <div className="flex flex-col items-center justify-center min-h-screen  bg-gradient-to-br from-white to-blue-400">
+      <h1 className="text-4xl font-bold text-black mb-8">Sign In</h1>
       <form
         onSubmit={handleSubmit}
         className="w-full max-w-sm bg-white p-8 rounded-lg shadow-md"
@@ -47,7 +47,7 @@ const SignIn: React.FunctionComponent<ISignInProps> = (props) => {
         <div className="mb-4">
           <label
             htmlFor="email"
-            className="block mb-2 text-purple-600 font-bold"
+            className="block mb-2 text-black font-bold"
           >
             Email
           </label>
@@ -63,7 +63,7 @@ const SignIn: React.FunctionComponent<ISignInProps> = (props) => {
         <div className="mb-4">
           <label
             htmlFor="password"
-            className="block mb-2 text-purple-600 font-bold"
+            className="block mb-2 text-black font-bold"
           >
             Password
           </label>
@@ -87,16 +87,16 @@ const SignIn: React.FunctionComponent<ISignInProps> = (props) => {
         </div>
         <button
           type="submit"
-          className="w-full px-4 py-2 text-white bg-purple-600 rounded hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-opacity-50"
+          className="w-full px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
         >
           Sign In
         </button>
       </form>
-      <p className="mt-4 text-white">
+      <p className="mt-4 text-black">
         Don't have an account? {' '}
         <Link
           href="/signup"
-          className="text-white hover:text-black hover:underline"
+          className="text-black hover:text-blue-600 hover:underline"
         >
           Sign Up
         </Link>

@@ -103,11 +103,11 @@ const Setting: React.FunctionComponent<ISettingProps> = (props) => {
   return (
     <ProtectedRoute>
     <NavbarLayout>
-      <div className="container max-w-sm  mx-auto px-4 pt-8 pb-20">
-        <h1 className="text-2xl font-bold mb-4">Profile</h1>
+      <div className="container max-w-sm  mx-auto px-4 pt-8 pb-20 bg-gradient-to-br from-white to-blue-400">
+        <h1 className="text-2xl font-bold mb-4 text-black">Settings</h1>
         <form onSubmit={handleUpdateProfile} className="mb-8">
           <div className="mb-4">
-            <label htmlFor="name" className="block mb-2">
+            <label htmlFor="name" className="block mb-2 text-black font-bold">
               Name
             </label>
             <input
@@ -120,7 +120,7 @@ const Setting: React.FunctionComponent<ISettingProps> = (props) => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="email" className="block mb-2">
+            <label htmlFor="email" className="block mb-2 text-black font-bold">
               Email
             </label>
             <input
@@ -139,10 +139,10 @@ const Setting: React.FunctionComponent<ISettingProps> = (props) => {
             Update Profile
           </button>
         </form>
-        <h2 className="text-xl font-bold mb-4">Change Password</h2>
+        <h2 className="text-xl font-bold mb-4 text-black">Change Password</h2>
         <form onSubmit={handleChangePassword}>
           <div className="mb-4">
-            <label htmlFor="password" className="block mb-2">
+            <label htmlFor="password" className="block mb-2 text-black font-bold">
               New Password
             </label>
             <input
@@ -155,7 +155,7 @@ const Setting: React.FunctionComponent<ISettingProps> = (props) => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="confirmPassword" className="block mb-2">
+            <label htmlFor="confirmPassword" className="block mb-2 text-black font-bold">
               Confirm Password
             </label>
             <input
