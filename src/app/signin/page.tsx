@@ -24,7 +24,8 @@ const SignIn: React.FunctionComponent<ISignInProps> = (props) => {
       });
       console.log(response.data);
       dispatch(setUser(response.data.user));
-      localStorage.setItem("user", JSON.stringify(response.data.user));
+      if (typeof window !== 'undefined') {
+      localStorage.setItem("user", JSON.stringify(response.data.user));}
       router.push("/dashboard");
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {

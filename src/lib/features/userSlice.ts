@@ -5,7 +5,7 @@ export interface IUserState {
   name: string;
   email: string;
   isLoggedIn: boolean;
-};
+}
 
 const initialState: IUserState = {
   id: 0,
@@ -15,13 +15,15 @@ const initialState: IUserState = {
 };
 
 const loadUserFromStorage = (): IUserState => {
-  const storedUserData = localStorage.getItem("user");
-  console.log("Loading user data from local storage");
-  if (storedUserData) {
-    const parsedData = JSON.parse(storedUserData);
-    console.log("Parsed user data:", parsedData);
-    if (parsedData.id && parsedData.name && parsedData.email) {
-      return { ...parsedData, isLoggedIn: true };
+  if (typeof window !== "undefined") {
+    const storedUserData = localStorage.getItem("user");
+    console.log("Loading user data from local storage");
+    if (storedUserData) {
+      const parsedData = JSON.parse(storedUserData);
+      console.log("Parsed user data:", parsedData);
+      if (parsedData.id && parsedData.name && parsedData.email) {
+        return { ...parsedData, isLoggedIn: true };
+      }
     }
   }
   return initialState;
@@ -54,11 +56,15 @@ const userSlice = createSlice({
       if (action.payload.email !== undefined) {
         state.email = action.payload.email;
       }
-      localStorage.setItem("user", JSON.stringify(state));
+      if (typeof window !== "undefined") {
+        localStorage.setItem("user", JSON.stringify(state));
+      }
       console.log("User data stored in local storage:", state);
     },
     logout: (state) => {
-      localStorage.removeItem("user");
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("user");
+      }
       return initialState;
     },
   },

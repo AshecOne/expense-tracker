@@ -12,10 +12,12 @@ export default function NavbarLayout({
   const dispatch = useAppDispatch();
   React.useEffect(() => {
     const loadUserFromStorage = () => {
-      const storedUserData = localStorage.getItem("user");
-      if (storedUserData) {
-        const user = JSON.parse(storedUserData);
-        dispatch(setUser(user));
+      if (typeof window !== "undefined") {
+        const storedUserData = localStorage.getItem("user");
+        if (storedUserData) {
+          const user = JSON.parse(storedUserData);
+          dispatch(setUser(user));
+        }
       }
     };
 

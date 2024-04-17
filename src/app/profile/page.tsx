@@ -26,10 +26,12 @@ const Profil: React.FunctionComponent<IProfilProps> = (props) => {
         console.log("Response from server:", response.data);
         const { id_user, name, email } = response.data[0];
         dispatch(setUser({ id: id_user, name, email, isLoggedIn: true }));
-        localStorage.setItem(
-          "user",
-          JSON.stringify({ id: id_user, name, email, isLoggedIn: true })
-        );
+        if (typeof window !== "undefined") {
+          localStorage.setItem(
+            "user",
+            JSON.stringify({ id: id_user, name, email, isLoggedIn: true })
+          );
+        }
         console.log("Data saved to local storage:", {
           id: id_user,
           name,
@@ -54,13 +56,15 @@ const Profil: React.FunctionComponent<IProfilProps> = (props) => {
         }
       }
     };
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      const parsedUser = JSON.parse(storedUser);
-      dispatch(setUser(parsedUser));
-      console.log("User data from local storage:", parsedUser);
-    } else {
-      fetchData();
+    if (typeof window !== "undefined") {
+      const storedUser = localStorage.getItem("user");
+      if (storedUser) {
+        const parsedUser = JSON.parse(storedUser);
+        dispatch(setUser(parsedUser));
+        console.log("User data from local storage:", parsedUser);
+      } else {
+        fetchData();
+      }
     }
   }, [dispatch, user.id]);
   const handleLogout = () => {

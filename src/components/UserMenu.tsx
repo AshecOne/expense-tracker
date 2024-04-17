@@ -1,7 +1,7 @@
 import { useRouter } from 'next/navigation';
 import { useAppDispatch } from '@/lib/hooks';
 import { logout } from '@/lib/features/userSlice';
-import { MdSettings, MdExitToApp } from 'react-icons/md'; // Import ikon
+import { MdSettings, MdExitToApp } from 'react-icons/md';
 
 interface IUserMenuProps {
   onClose: () => void;
