@@ -30,6 +30,8 @@ const SignUp: React.FunctionComponent<ISignUpProps> = (props) => {
         name,
         email,
         password,
+      }, {
+        withCredentials: true
       });
       console.log(response.data);
       router.push("/signin");

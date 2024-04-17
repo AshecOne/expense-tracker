@@ -25,6 +25,8 @@ const SignIn: React.FunctionComponent<ISignInProps> = (props) => {
       const response = await axios.post("https://secure-basin-94383-7efd7c1abae1.herokuapp.com/users/signin", {
         email,
         password,
+      }, {
+        withCredentials: true
       });
       console.log(response.data);
       dispatch(setUser(response.data.user));
