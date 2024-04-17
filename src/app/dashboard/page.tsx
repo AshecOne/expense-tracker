@@ -6,6 +6,7 @@ import NavbarLayout from "../NavbarLayout";
 import UserMenu from "@/components/UserMenu";
 import { FiArrowDownCircle, FiArrowUpCircle } from "react-icons/fi";
 import ProtectedRoute from "@/components/ProtectedRoute";
+import ClientOnly from "@/components/ClientOnly";
 
 interface IDashboardProps {}
 
@@ -78,61 +79,65 @@ const Dashboard: React.FunctionComponent<IDashboardProps> = (props) => {
   };
 
   return (
-    <ProtectedRoute>
-      <NavbarLayout>
-        <div className="container mx-auto px-4 pt-8 pb-20 min-h-screen bg-gradient-to-br from-white to-blue-400">
-          <div className="flex items-center justify-between mb-8">
-            <h1 className="text-2xl font-bold text-black">Dashboard</h1>
-            <div className="relative">
-              <div
-                className="text-lg text-black font-semibold cursor-pointer hover:underline hover:text-blue-600 hover:font-extrabold"
-                onClick={toggleUserMenu}
-              >
-                Hi, {user.name}
+    <ClientOnly>
+      <ProtectedRoute>
+        <NavbarLayout>
+          <div className="container mx-auto px-4 pt-8 pb-20 min-h-screen bg-gradient-to-br from-white to-blue-400">
+            <div className="flex items-center justify-between mb-8">
+              <h1 className="text-2xl font-bold text-black">Dashboard</h1>
+              <div className="relative">
+                <div
+                  className="text-lg text-black font-semibold cursor-pointer hover:underline hover:text-blue-600 hover:font-extrabold"
+                  onClick={toggleUserMenu}
+                >
+                  Hi, {user.name}
+                </div>
+                {isUserMenuOpen && <UserMenu onClose={toggleUserMenu} />}
               </div>
-              {isUserMenuOpen && <UserMenu onClose={toggleUserMenu} />}
+            </div>
+            <div className="bg-blue-400 rounded-lg shadow-md p-6 text-white mb-8">
+              <h2 className="text-xl font-bold mb-2">Balance</h2>
+              <p className="text-3xl">Rp.{balance.toFixed(2)}</p>
+            </div>
+            <div>
+              <h2 className="text-xl font-bold mb-4 text-black">
+                Last Transactions
+              </h2>
+              {transactions.length === 0 ? (
+                <p className="text-black text-xl">No data available</p>
+              ) : (
+                <ul>
+                  {transactions.slice(0, 5).map((transaction) => (
+                    <li
+                      key={transaction.id}
+                      className="mb-4 bg-gray-100 rounded-lg shadow-md p-4 flex justify-between items-center"
+                    >
+                      <div>
+                        <h3 className="text-lg font-bold mb-2 text-black">
+                          {transaction.category}
+                        </h3>
+                        <p className="text-black">
+                          {transaction.type === "income" ? "+ " : "- "}
+                          Rp {transaction.amount.toFixed(2)}
+                        </p>
+                        <p className="text-sm text-black">
+                          {formatDate(transaction.date)}
+                        </p>
+                      </div>
+                      {transaction.type === "income" ? (
+                        <FiArrowUpCircle className="text-green-500" size={24} />
+                      ) : (
+                        <FiArrowDownCircle className="text-red-500" size={24} />
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
           </div>
-          <div className="bg-blue-400 rounded-lg shadow-md p-6 text-white mb-8">
-            <h2 className="text-xl font-bold mb-2">Balance</h2>
-            <p className="text-3xl">Rp.{balance.toFixed(2)}</p>
-          </div>
-          <div>
-            <h2 className="text-xl font-bold mb-4 text-black">Last Transactions</h2>
-            {transactions.length === 0 ? (
-              <p className="text-black text-xl">No data available</p>
-            ) : (
-              <ul>
-                {transactions.slice(0, 5).map((transaction) => (
-                  <li
-                    key={transaction.id}
-                    className="mb-4 bg-gray-100 rounded-lg shadow-md p-4 flex justify-between items-center"
-                  >
-                    <div>
-                      <h3 className="text-lg font-bold mb-2 text-black">
-                        {transaction.category}
-                      </h3>
-                      <p className="text-black">
-                        {transaction.type === "income" ? "+ " : "- "}
-                        Rp {transaction.amount.toFixed(2)}
-                      </p>
-                      <p className="text-sm text-black">
-                        {formatDate(transaction.date)}
-                      </p>
-                    </div>
-                    {transaction.type === "income" ? (
-                      <FiArrowUpCircle className="text-green-500" size={24} />
-                    ) : (
-                      <FiArrowDownCircle className="text-red-500" size={24} />
-                    )}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-        </div>
-      </NavbarLayout>
-    </ProtectedRoute>
+        </NavbarLayout>
+      </ProtectedRoute>
+    </ClientOnly>
   );
 };
 

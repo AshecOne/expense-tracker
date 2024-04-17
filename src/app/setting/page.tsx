@@ -6,6 +6,7 @@ import { updateUser } from "@/lib/features/userSlice";
 import axios from "axios";
 import NavbarLayout from "../NavbarLayout";
 import ProtectedRoute from "@/components/ProtectedRoute";
+import ClientOnly from "@/components/ClientOnly";
 
 interface ISettingProps {}
 
@@ -37,7 +38,6 @@ const Setting: React.FunctionComponent<ISettingProps> = (props) => {
           email,
         }
       );
-      // Pastikan respon server mengembalikan data pengguna yang diperbarui
       dispatch(
         updateUser({
           name: response.data.user.name,
@@ -57,7 +57,6 @@ const Setting: React.FunctionComponent<ISettingProps> = (props) => {
           error.response?.status
         );
       } else {
-        // If it's not an AxiosError, it's safe to assume it's a regular Error object
         console.error("Error updating profile:", (error as Error).message);
       }
       alert("Failed to update profile");
@@ -101,82 +100,98 @@ const Setting: React.FunctionComponent<ISettingProps> = (props) => {
   };
 
   return (
-    <ProtectedRoute>
-    <NavbarLayout>
-      <div className="container max-w-sm  mx-auto px-4 pt-8 pb-20 bg-gradient-to-br from-white to-blue-400">
-        <h1 className="text-2xl font-bold mb-4 text-black">Settings</h1>
-        <form onSubmit={handleUpdateProfile} className="mb-8">
-          <div className="mb-4">
-            <label htmlFor="name" className="block mb-2 text-black font-bold">
-              Name
-            </label>
-            <input
-              type="text"
-              id="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded text-black"
-              required
-            />
+    <ClientOnly>
+      <ProtectedRoute>
+        <NavbarLayout>
+          <div className="container max-w-sm  mx-auto px-4 pt-8 pb-20 bg-gradient-to-br from-white to-blue-400">
+            <h1 className="text-2xl font-bold mb-4 text-black">Settings</h1>
+            <form onSubmit={handleUpdateProfile} className="mb-8">
+              <div className="mb-4">
+                <label
+                  htmlFor="name"
+                  className="block mb-2 text-black font-bold"
+                >
+                  Name
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded text-black"
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label
+                  htmlFor="email"
+                  className="block mb-2 text-black font-bold"
+                >
+                  Email
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded text-black"
+                  required
+                />
+              </div>
+              <button
+                type="submit"
+                className="px-4 py-2 bg-blue-500 text-white rounded"
+              >
+                Update Profile
+              </button>
+            </form>
+            <h2 className="text-xl font-bold mb-4 text-black">
+              Change Password
+            </h2>
+            <form onSubmit={handleChangePassword}>
+              <div className="mb-4">
+                <label
+                  htmlFor="password"
+                  className="block mb-2 text-black font-bold"
+                >
+                  New Password
+                </label>
+                <input
+                  type="password"
+                  id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded text-black"
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label
+                  htmlFor="confirmPassword"
+                  className="block mb-2 text-black font-bold"
+                >
+                  Confirm Password
+                </label>
+                <input
+                  type="password"
+                  id="confirmPassword"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded text-black"
+                  required
+                />
+              </div>
+              <button
+                type="submit"
+                className="px-4 py-2 bg-blue-500 text-white rounded"
+              >
+                Change Password
+              </button>
+            </form>
           </div>
-          <div className="mb-4">
-            <label htmlFor="email" className="block mb-2 text-black font-bold">
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded text-black"
-              required
-            />
-          </div>
-          <button
-            type="submit"
-            className="px-4 py-2 bg-blue-500 text-white rounded"
-          >
-            Update Profile
-          </button>
-        </form>
-        <h2 className="text-xl font-bold mb-4 text-black">Change Password</h2>
-        <form onSubmit={handleChangePassword}>
-          <div className="mb-4">
-            <label htmlFor="password" className="block mb-2 text-black font-bold">
-              New Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded text-black"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="confirmPassword" className="block mb-2 text-black font-bold">
-              Confirm Password
-            </label>
-            <input
-              type="password"
-              id="confirmPassword"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded text-black"
-              required
-            />
-          </div>
-          <button
-            type="submit"
-            className="px-4 py-2 bg-blue-500 text-white rounded"
-          >
-            Change Password
-          </button>
-        </form>
-      </div>
-    </NavbarLayout>
-    </ProtectedRoute>
+        </NavbarLayout>
+      </ProtectedRoute>
+    </ClientOnly>
   );
 };
 
