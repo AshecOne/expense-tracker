@@ -8,7 +8,7 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 import ClientOnly from "@/components/ClientOnly";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useRouter, useParams } from "next/navigation";
+import { useRouter, useParams, useSearchParams } from "next/navigation";
 
 const Edit: React.FunctionComponent = () => {
   const [type, setType] = useState("expense");
@@ -18,6 +18,8 @@ const Edit: React.FunctionComponent = () => {
   const [date, setDate] = useState("");
   const user = useAppSelector((state: any) => state.user);
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const transactionId = searchParams.get("id");
 
   const { id } = useParams();
 
@@ -25,7 +27,7 @@ const Edit: React.FunctionComponent = () => {
     const fetchTransaction = async () => {
       try {
         const response = await axios.get(
-          `https://secure-basin-94383-7efd7c1abae1.herokuapp.com/users/transactions/${id}`,
+          `https://secure-basin-94383-7efd7c1abae1.herokuapp.com/users/transactions/${transactionId}`,
           {
             withCredentials: true,
           }
@@ -41,10 +43,10 @@ const Edit: React.FunctionComponent = () => {
       }
     };
 
-    if (id) {
+    if (transactionId) {
       fetchTransaction();
     }
-  }, [id]);
+  }, [transactionId]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

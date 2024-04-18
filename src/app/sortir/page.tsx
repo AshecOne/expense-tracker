@@ -132,12 +132,12 @@ const Sortir: React.FunctionComponent<ISortirProps> = (props) => {
   };
 
   const handleEdit = (transactionId: number) => {
-    router.push(`/edit/${transactionId}`);
+    router.push(`/edit?id=${transactionId}`);
   };
 
   useEffect(() => {
     fetchTransactions();
-  }, [fetchTransactions]);
+  }, []);
 
   return (
     <ClientOnly>

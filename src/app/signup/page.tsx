@@ -33,8 +33,8 @@ const SignUp: React.FunctionComponent<ISignUpProps> = (props) => {
       );
       console.log(response.data);
       toast.success("Sign up successful!", {
-        autoClose: 2000, // Menutup notifikasi setelah 2 detik
-        onClose: () => router.push("/signin"), // Mengarahkan ke halaman sign in setelah notifikasi ditutup
+        autoClose: 2000,
+        onClose: () => setTimeout(() => router.push("/signin"), 500),
       });
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
