@@ -9,6 +9,7 @@ import ClientOnly from "@/components/ClientOnly";
 import { ClipLoader } from "react-spinners";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/navigation";
 
 interface ITransaction {
   id_transaction: number;
@@ -31,6 +32,7 @@ const Sortir: React.FunctionComponent<ISortirProps> = (props) => {
   const [transactionToDelete, setTransactionToDelete] = useState<number | null>(
     null
   );
+  const router = useRouter();
 
   useEffect(() => {
     fetchTransactions();
@@ -131,6 +133,10 @@ const Sortir: React.FunctionComponent<ISortirProps> = (props) => {
         toast.error("Failed to delete transaction");
       }
     }
+  };
+
+  const handleEdit = (transactionId: number) => {
+    router.push(`/edit/${transactionId}`);
   };
 
   return (
@@ -261,7 +267,13 @@ const Sortir: React.FunctionComponent<ISortirProps> = (props) => {
                         Rp {transaction.amount.toFixed(2)}
                       </span>
                     </div>
-                    <div className="flex justify-end mt-4">
+                    <div className="flex justify-between mt-4">
+                      <button
+                        onClick={() => handleEdit(transaction.id_transaction)}
+                        className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
+                      >
+                        Edit
+                      </button>
                       <button
                         onClick={() => handleDelete(transaction.id_transaction)}
                         className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 focus:outline-none"

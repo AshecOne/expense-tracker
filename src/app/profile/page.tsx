@@ -16,6 +16,7 @@ const Profil: React.FunctionComponent<IProfilProps> = (props) => {
   const user = useAppSelector((state: any) => state.user);
   const dispatch = useAppDispatch();
   const router = useRouter();
+
   useEffect(() => {
     console.log("Checking for user data...");
     const fetchData = async () => {
@@ -71,6 +72,7 @@ const Profil: React.FunctionComponent<IProfilProps> = (props) => {
       }
     }
   }, [dispatch, user.id]);
+
   const handleLogout = () => {
     dispatch(logout());
     router.push("/");
@@ -81,8 +83,8 @@ const Profil: React.FunctionComponent<IProfilProps> = (props) => {
       <ProtectedRoute>
         <NavbarLayout>
           <div className="flex justify-center items-center mx-auto min-h-screen bg-gradient-to-br from-white to-blue-400">
-            <div className="bg-white p-10 px-16 rounded-lg shadow-md w-64 text-center">
-              <div className="flex items-center justify-center mb-6">
+            <div className="flex items-center justify-center bg-white px-16 rounded-lg shadow-md w-64 text-center">
+              <div className="mb-6">
                 <div className="w-32 h-32 rounded-full bg-blue-400 flex items-center justify-center text-4xl font-bold text-white">
                   {user.name.charAt(0).toUpperCase()}
                 </div>

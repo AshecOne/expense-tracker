@@ -8,16 +8,43 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 import ClientOnly from "@/components/ClientOnly";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/navigation";
 
-interface IInputProps {}
+interface IEditProps {
+  id: string;
+}
 
-const Input: React.FunctionComponent<IInputProps> = (props) => {
+const Edit: React.FunctionComponent<IEditProps> = ({ id }) => {
   const [type, setType] = useState("expense");
   const [amount, setAmount] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [date, setDate] = useState("");
   const user = useAppSelector((state: any) => state.user);
+  const router = useRouter();
+
+  React.useEffect(() => {
+    const fetchTransaction = async () => {
+      try {
+        const response = await axios.get(
+          `https://secure-basin-94383-7efd7c1abae1.herokuapp.com/users/transactions/${id}`,
+          {
+            withCredentials: true,
+          }
+        );
+        const { type, amount, description, category, date } = response.data;
+        setType(type);
+        setAmount(amount.toString());
+        setDescription(description);
+        setCategory(category);
+        setDate(date);
+      } catch (error) {
+        console.error("Error fetching transaction:", error);
+      }
+    };
+
+    fetchTransaction();
+  }, [id]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,28 +57,28 @@ const Input: React.FunctionComponent<IInputProps> = (props) => {
       userId: user.id,
     });
     try {
-      await axios.post("https://secure-basin-94383-7efd7c1abae1.herokuapp.com/users/transactions", {
-        type,
-        amount: parseFloat(amount),
-        description,
-        category,
-        date,
-        userId: user.id,
-      },
-          {
-            withCredentials: true,
-          });
-      console.log("Transaction added successfully");
-      toast.success("Transaction added successfully");
-      setAmount("");
-      setDescription("");
-      setCategory("");
-      setDate("");
+      await axios.put(
+        `https://secure-basin-94383-7efd7c1abae1.herokuapp.com/users/transactions/${id}`,
+        {
+          type,
+          amount: parseFloat(amount),
+          description,
+          category,
+          date,
+          userId: user.id,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      console.log("Transaction updated successfully");
+      toast.success("Transaction updated successfully");
+      router.push("/sortir");
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
-        console.error("Error adding transaction:", error.response?.data);
-        alert(
-          "Failed to add transaction: " +
+        console.error("Error updating transaction:", error.response?.data);
+        toast.error(
+          "Failed to update transaction: " +
             (error.response?.data.message || "Unknown error")
         );
       } else {
@@ -59,7 +86,7 @@ const Input: React.FunctionComponent<IInputProps> = (props) => {
           "An unexpected error occurred:",
           (error as Error).message
         );
-        alert("An unexpected error occurred");
+        toast.error("An unexpected error occurred");
       }
     }
   };
@@ -88,14 +115,13 @@ const Input: React.FunctionComponent<IInputProps> = (props) => {
     console.log(`Date changed to: ${e.target.value}`);
     setDate(e.target.value);
   };
-
   return (
     <ClientOnly>
       <ProtectedRoute>
         <NavbarLayout>
           <div className="min-h-screen mx-auto px-4 py-8 bg-gradient-to-br from-white to-blue-400">
             <h2 className="text-2xl font-bold mb-4 text-black">
-              Add New Transaction
+              Edit Transaction
             </h2>
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
@@ -215,11 +241,11 @@ const Input: React.FunctionComponent<IInputProps> = (props) => {
               </div>
             </form>
           </div>
-          <ToastContainer /> 
+          <ToastContainer />
         </NavbarLayout>
       </ProtectedRoute>
     </ClientOnly>
   );
 };
 
-export default Input;
+export default Edit;
