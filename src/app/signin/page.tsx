@@ -7,6 +7,8 @@ import { useAppDispatch } from "@/lib/hooks";
 import { setUser } from "@/lib/features/userSlice";
 import Link from "next/link";
 import GuestRoute from "@/components/GuestRoute";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface ISignInProps {}
 
@@ -37,6 +39,7 @@ const SignIn: React.FunctionComponent<ISignInProps> = (props) => {
       if (typeof window !== "undefined") {
         localStorage.setItem("user", JSON.stringify(response.data.user));
       }
+      toast.success("Sign in successful!");
       router.push("/dashboard");
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
@@ -121,6 +124,7 @@ const SignIn: React.FunctionComponent<ISignInProps> = (props) => {
           </Link>
         </p>
       </div>
+      <ToastContainer />
     </GuestRoute>
   );
 };

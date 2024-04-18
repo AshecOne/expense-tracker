@@ -98,11 +98,7 @@ const Dashboard: React.FunctionComponent<IDashboardProps> = (props) => {
                   className="text-lg text-black font-semibold cursor-pointer hover:underline hover:text-blue-600 hover:font-extrabold"
                   onClick={toggleUserMenu}
                 >
-                  Hi,{" "}
-                  {user.name
-                    .split(" ")
-                    .map((word: string) => word.charAt(0).toUpperCase())
-                    .join("")}
+                  Hi, {user.name.split(" ")[0]}
                 </div>
                 {isUserMenuOpen && <UserMenu onClose={toggleUserMenu} />}
               </div>

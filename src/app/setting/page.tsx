@@ -7,6 +7,8 @@ import axios from "axios";
 import NavbarLayout from "../NavbarLayout";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import ClientOnly from "@/components/ClientOnly";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface ISettingProps {}
 
@@ -48,7 +50,7 @@ const Setting: React.FunctionComponent<ISettingProps> = (props) => {
         })
       );
       console.log("Profile updated successfully with response:", response.data);
-      alert("Profile updated successfully");
+      toast.success("Profile updated successfully");
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
         console.error(
@@ -62,7 +64,7 @@ const Setting: React.FunctionComponent<ISettingProps> = (props) => {
       } else {
         console.error("Error updating profile:", (error as Error).message);
       }
-      alert("Failed to update profile");
+      toast.error("Failed to update profile");
     }
   };
 
@@ -70,7 +72,7 @@ const Setting: React.FunctionComponent<ISettingProps> = (props) => {
     e.preventDefault();
     if (password !== confirmPassword) {
       console.log("Password and confirm password do not match");
-      alert("Passwords do not match");
+      toast.error("Passwords do not match");
       return;
     }
     console.log("Attempting to change password for user id:", user.id);
@@ -85,7 +87,7 @@ const Setting: React.FunctionComponent<ISettingProps> = (props) => {
         }
       );
       console.log("Password changed successfully");
-      alert("Password changed successfully");
+      toast.success("Password changed successfully");
       setPassword("");
       setConfirmPassword("");
     } catch (error: unknown) {
@@ -101,7 +103,7 @@ const Setting: React.FunctionComponent<ISettingProps> = (props) => {
       } else {
         console.error("Error changing password:", (error as Error).message);
       }
-      alert("Failed to change password");
+      toast.error("Failed to change password");
     }
   };
 
@@ -195,6 +197,7 @@ const Setting: React.FunctionComponent<ISettingProps> = (props) => {
               </button>
             </form>
           </div>
+          <ToastContainer />
         </NavbarLayout>
       </ProtectedRoute>
     </ClientOnly>

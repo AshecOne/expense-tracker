@@ -6,6 +6,8 @@ import { useAppSelector } from "@/lib/hooks";
 import NavbarLayout from "../NavbarLayout";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import ClientOnly from "@/components/ClientOnly";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface IInputProps {}
 
@@ -40,7 +42,7 @@ const Input: React.FunctionComponent<IInputProps> = (props) => {
             withCredentials: true,
           });
       console.log("Transaction added successfully");
-      alert("Transaction added successfully");
+      toast.success("Transaction added successfully");
       setAmount("");
       setDescription("");
       setCategory("");
@@ -213,6 +215,7 @@ const Input: React.FunctionComponent<IInputProps> = (props) => {
               </div>
             </form>
           </div>
+          <ToastContainer /> 
         </NavbarLayout>
       </ProtectedRoute>
     </ClientOnly>

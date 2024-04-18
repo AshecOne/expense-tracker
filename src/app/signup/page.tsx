@@ -5,6 +5,8 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import GuestRoute from "@/components/GuestRoute";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface ISignUpProps {}
 
@@ -31,6 +33,7 @@ const SignUp: React.FunctionComponent<ISignUpProps> = (props) => {
         }
       );
       console.log(response.data);
+      toast.success("Sign up successful!"); 
       router.push("/signin");
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
@@ -128,6 +131,7 @@ const SignUp: React.FunctionComponent<ISignUpProps> = (props) => {
           </Link>
         </p>
       </div>
+      <ToastContainer />
     </GuestRoute>
   );
 };

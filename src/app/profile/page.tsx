@@ -81,15 +81,15 @@ const Profil: React.FunctionComponent<IProfilProps> = (props) => {
       <ProtectedRoute>
         <NavbarLayout>
           <div className="flex justify-center items-center mx-auto min-h-screen bg-gradient-to-br from-white to-blue-400">
-            <div className="bg-white p-10 px-16 rounded-lg shadow-md w-64">
+            <div className="bg-white p-10 px-16 rounded-lg shadow-md w-64 text-center">
               <div className="flex items-center justify-center mb-6">
-              <div className="w-32 h-32 rounded-full bg-blue-400 flex items-center justify-center text-4xl font-bold text-white">
-              {user.name.split(' ').map((word: string) => word.charAt(0).toUpperCase()).join('')}
+                <div className="w-32 h-32 rounded-full bg-blue-400 flex items-center justify-center text-4xl font-bold text-white">
+                  {user.name.charAt(0).toUpperCase()}
+                </div>
               </div>
-              </div>
-              <div className="text-center">
+              <div>
                 <h2 className="text-2xl font-bold text-blue-600 mb-2">
-                  {user.name}
+                  {user.name.split(" ")[0]}
                 </h2>
                 <p className="text-gray-600 mb-6">{user.email}</p>
                 <div className="flex flex-col space-y-4">

@@ -7,6 +7,8 @@ import NavbarLayout from "../NavbarLayout";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import ClientOnly from "@/components/ClientOnly";
 import { ClipLoader } from "react-spinners";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface ITransaction {
   id_transaction: number;
@@ -25,6 +27,11 @@ const Sortir: React.FunctionComponent<ISortirProps> = (props) => {
   const [category, setCategory] = useState("");
   const user = useAppSelector((state: any) => state.user);
   const [loading, setLoading] = useState(true);
+  const [deleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
+  const [transactionToDelete, setTransactionToDelete] = useState<number | null>(
+    null
+  );
+
   useEffect(() => {
     fetchTransactions();
   }, []);
@@ -101,6 +108,31 @@ const Sortir: React.FunctionComponent<ISortirProps> = (props) => {
     }
   };
 
+  const handleDelete = async (transactionId: number) => {
+    setTransactionToDelete(transactionId);
+    setDeleteConfirmationOpen(true);
+  };
+  const confirmDelete = async () => {
+    if (transactionToDelete) {
+      try {
+        await axios.delete(
+          `https://secure-basin-94383-7efd7c1abae1.herokuapp.com/users/transactions/${transactionToDelete}`,
+          {
+            withCredentials: true,
+          }
+        );
+        console.log("Transaction deleted successfully");
+        toast.success("Transaction deleted successfully");
+        setDeleteConfirmationOpen(false);
+        setTransactionToDelete(null);
+        fetchTransactions();
+      } catch (error) {
+        console.error("Error deleting transaction:", error);
+        toast.error("Failed to delete transaction");
+      }
+    }
+  };
+
   return (
     <ClientOnly>
       <ProtectedRoute>
@@ -167,6 +199,29 @@ const Sortir: React.FunctionComponent<ISortirProps> = (props) => {
               </button>
             </div>
             <div className="space-y-4">
+              {deleteConfirmationOpen && (
+                <div className="fixed inset-0 flex items-center justify-center z-50">
+                  <div className="bg-white p-6 rounded shadow">
+                    <p className="text-black mb-4">
+                      Are you sure you want to delete this transaction?
+                    </p>
+                    <div className="flex justify-end">
+                      <button
+                        onClick={() => setDeleteConfirmationOpen(false)}
+                        className="px-4 py-2 bg-gray-300 text-black rounded mr-2"
+                      >
+                        No
+                      </button>
+                      <button
+                        onClick={confirmDelete}
+                        className="px-4 py-2 bg-red-500 text-white rounded"
+                      >
+                        Yes
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
               {loading ? (
                 <div className="flex justify-center items-center mt-8">
                   <ClipLoader color="#0b11df" size={40} />
@@ -206,6 +261,14 @@ const Sortir: React.FunctionComponent<ISortirProps> = (props) => {
                         Rp {transaction.amount.toFixed(2)}
                       </span>
                     </div>
+                    <div className="flex justify-end mt-4">
+                      <button
+                        onClick={() => handleDelete(transaction.id_transaction)}
+                        className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 focus:outline-none"
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </div>
                 ))
               ) : (
@@ -217,6 +280,7 @@ const Sortir: React.FunctionComponent<ISortirProps> = (props) => {
               )}
             </div>
           </div>
+          <ToastContainer />
         </NavbarLayout>
       </ProtectedRoute>
     </ClientOnly>
