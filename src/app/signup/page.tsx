@@ -16,7 +16,6 @@ const SignUp: React.FunctionComponent<ISignUpProps> = (props) => {
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const router = useRouter();
-    const [errorMessage, setErrorMessage] = useState("");
   
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,21 +32,23 @@ const SignUp: React.FunctionComponent<ISignUpProps> = (props) => {
         }
       );
       console.log(response.data);
-      toast.success("Sign up successful!"); 
-      router.push("/signin");
+      toast.success("Sign up successful!", {
+        autoClose: 2000, // Menutup notifikasi setelah 2 detik
+        onClose: () => router.push("/signin"), // Mengarahkan ke halaman sign in setelah notifikasi ditutup
+      });
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
         console.error("Error response data:", error.response?.data);
         console.error("Error response status:", error.response?.status);
         if (error.response?.status === 400) {
-          setErrorMessage("Email is already registered.");
+          toast.error("Email is already registered.");
         } else {
-          setErrorMessage("An error occurred. Please try again.");
+          toast.error("An error occurred. Please try again.");
         }
       } else {
         const e = error as Error;
         console.error("Error message:", e.message);
-        setErrorMessage("An error occurred. Please try again.");
+        toast.error("An error occurred. Please try again.");
       }
     }
   };
@@ -56,9 +57,6 @@ const SignUp: React.FunctionComponent<ISignUpProps> = (props) => {
     <GuestRoute>
       <div className="flex flex-col mx-auto items-center justify-center min-h-screen bg-gradient-to-br from-white to-blue-400">
         <h1 className="text-4xl font-bold text-black mb-8">Sign Up</h1>
-        {errorMessage && (
-          <p className="text-red-500 mb-4 text-xl font-bold">{errorMessage}</p>
-        )}
         <form
           onSubmit={handleSubmit}
           className="w-full max-w-sm bg-white p-8 rounded-lg shadow-md"

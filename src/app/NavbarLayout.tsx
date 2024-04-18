@@ -1,8 +1,8 @@
-"use clinet";
 import Navbar from "../components/Navbar";
 import React from "react";
 import { useAppDispatch } from "@/lib/hooks";
 import { setUser } from "@/lib/features/userSlice";
+import { usePathname } from "next/navigation";
 
 export default function NavbarLayout({
   children,
@@ -10,6 +10,8 @@ export default function NavbarLayout({
   children: React.ReactNode;
 }) {
   const dispatch = useAppDispatch();
+  const pathname = usePathname();
+
   React.useEffect(() => {
     const loadUserFromStorage = () => {
       if (typeof window !== "undefined") {
@@ -20,13 +22,15 @@ export default function NavbarLayout({
         }
       }
     };
-
     loadUserFromStorage();
-  }, []);
+  }, [dispatch]);
+
+  const isDashboard = pathname === "/dashboard";
+
   return (
     <div>
       {children}
-      <Navbar />
+      {!isDashboard && <Navbar />}
     </div>
   );
 }

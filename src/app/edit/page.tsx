@@ -1,6 +1,6 @@
 "use client";
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useAppSelector } from "@/lib/hooks";
 import NavbarLayout from "../NavbarLayout";
@@ -8,13 +8,9 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 import ClientOnly from "@/components/ClientOnly";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 
-interface IEditProps {
-  id: string;
-}
-
-const Edit: React.FunctionComponent<IEditProps> = ({ id }) => {
+const Edit: React.FunctionComponent = () => {
   const [type, setType] = useState("expense");
   const [amount, setAmount] = useState("");
   const [description, setDescription] = useState("");
@@ -23,7 +19,9 @@ const Edit: React.FunctionComponent<IEditProps> = ({ id }) => {
   const user = useAppSelector((state: any) => state.user);
   const router = useRouter();
 
-  React.useEffect(() => {
+  const { id } = useParams();
+
+  useEffect(() => {
     const fetchTransaction = async () => {
       try {
         const response = await axios.get(
@@ -43,7 +41,9 @@ const Edit: React.FunctionComponent<IEditProps> = ({ id }) => {
       }
     };
 
-    fetchTransaction();
+    if (id) {
+      fetchTransaction();
+    }
   }, [id]);
 
   const handleSubmit = async (e: React.FormEvent) => {

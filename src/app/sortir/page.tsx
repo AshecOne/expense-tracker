@@ -34,10 +34,6 @@ const Sortir: React.FunctionComponent<ISortirProps> = (props) => {
   );
   const router = useRouter();
 
-  useEffect(() => {
-    fetchTransactions();
-  }, []);
-
   const fetchTransactions = async () => {
     try {
       setLoading(true);
@@ -138,6 +134,10 @@ const Sortir: React.FunctionComponent<ISortirProps> = (props) => {
   const handleEdit = (transactionId: number) => {
     router.push(`/edit/${transactionId}`);
   };
+
+  useEffect(() => {
+    fetchTransactions();
+  }, [fetchTransactions]);
 
   return (
     <ClientOnly>

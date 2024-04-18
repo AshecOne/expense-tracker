@@ -18,7 +18,6 @@ const SignIn: React.FunctionComponent<ISignInProps> = (props) => {
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const [errorMessage, setErrorMessage] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,21 +38,23 @@ const SignIn: React.FunctionComponent<ISignInProps> = (props) => {
       if (typeof window !== "undefined") {
         localStorage.setItem("user", JSON.stringify(response.data.user));
       }
-      toast.success("Sign in successful!");
-      router.push("/dashboard");
+      toast.success("Sign in successful!", {
+        autoClose: 2000,
+        onClose: () => router.push("/dashboard"),
+      });
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
         console.error("Error response data:", error.response?.data);
         console.error("Error response status:", error.response?.status);
         if (error.response?.status === 401) {
-          setErrorMessage("Invalid email or password.");
+          toast.error("Invalid email or password.");
         } else {
-          setErrorMessage("An error occurred. Please try again.");
+          toast.error("An error occurred. Please try again.");
         }
       } else {
         const e = error as Error;
         console.error("Error message:", e.message);
-        setErrorMessage("An error occurred. Please try again.");
+        toast.error("An error occurred. Please try again.");
       }
     }
   };
@@ -62,9 +63,6 @@ const SignIn: React.FunctionComponent<ISignInProps> = (props) => {
     <GuestRoute>
       <div className="flex flex-col mx-auto items-center justify-center min-h-screen bg-gradient-to-br from-white to-blue-400">
         <h1 className="text-4xl font-bold text-black mb-8">Sign In</h1>
-        {errorMessage && (
-          <p className="text-red-500 mb-4 font-bold text-xl">{errorMessage}</p>
-        )}
         <form
           onSubmit={handleSubmit}
           className="w-full max-w-sm bg-white p-8 rounded-lg shadow-md"
