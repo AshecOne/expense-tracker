@@ -6,6 +6,7 @@ import { useAppSelector } from "@/lib/hooks";
 import NavbarLayout from "../NavbarLayout";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import ClientOnly from "@/components/ClientOnly";
+import { ClipLoader } from "react-spinners";
 
 interface ITransaction {
   id_transaction: number;
@@ -23,13 +24,14 @@ const Sortir: React.FunctionComponent<ISortirProps> = (props) => {
   const [type, setType] = useState("");
   const [category, setCategory] = useState("");
   const user = useAppSelector((state: any) => state.user);
-
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     fetchTransactions();
   }, []);
 
   const fetchTransactions = async () => {
     try {
+      setLoading(true);
       const response = await axios.get(
         `https://secure-basin-94383-7efd7c1abae1.herokuapp.com/users/transactions?userId=${user.id}&orderBy=date&order=desc`,
         {
@@ -60,6 +62,8 @@ const Sortir: React.FunctionComponent<ISortirProps> = (props) => {
       }
     } catch (error) {
       console.error("Error fetching transactions:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -163,7 +167,11 @@ const Sortir: React.FunctionComponent<ISortirProps> = (props) => {
               </button>
             </div>
             <div className="space-y-4">
-              {transactions.length > 0 ? (
+              {loading ? (
+                <div className="flex justify-center items-center mt-8">
+                  <ClipLoader color="#0b11df" size={40} />
+                </div>
+              ) : transactions.length > 0 ? (
                 transactions.map((transaction) => (
                   <div
                     key={transaction.id_transaction}

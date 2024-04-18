@@ -91,7 +91,7 @@ const Input: React.FunctionComponent<IInputProps> = (props) => {
     <ClientOnly>
       <ProtectedRoute>
         <NavbarLayout>
-          <div className="max-w-sm mx-auto px-4 py-8 bg-gradient-to-br from-white to-blue-400">
+          <div className="min-h-screen mx-auto px-4 py-8 bg-gradient-to-br from-white to-blue-400">
             <h2 className="text-2xl font-bold mb-4 text-black">
               Add New Expense
             </h2>

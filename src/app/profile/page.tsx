@@ -80,12 +80,12 @@ const Profil: React.FunctionComponent<IProfilProps> = (props) => {
     <ClientOnly>
       <ProtectedRoute>
         <NavbarLayout>
-          <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-white to-blue-400">
+          <div className="flex justify-center items-center mx-auto min-h-screen bg-gradient-to-br from-white to-blue-400">
             <div className="bg-white p-10 px-16 rounded-lg shadow-md w-64">
               <div className="flex items-center justify-center mb-6">
-                <div className="w-32 h-32 rounded-full bg-blue-400 flex items-center justify-center text-4xl font-bold text-white">
-                  {user.name.charAt(0).toUpperCase()}
-                </div>
+              <div className="w-32 h-32 rounded-full bg-blue-400 flex items-center justify-center text-4xl font-bold text-white">
+              {user.name.split(' ').map((word: string) => word.charAt(0).toUpperCase()).join('')}
+              </div>
               </div>
               <div className="text-center">
                 <h2 className="text-2xl font-bold text-blue-600 mb-2">

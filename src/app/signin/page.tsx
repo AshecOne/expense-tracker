@@ -57,7 +57,7 @@ const SignIn: React.FunctionComponent<ISignInProps> = (props) => {
 
   return (
     <GuestRoute>
-      <div className="flex flex-col items-center justify-center min-h-screen  bg-gradient-to-br from-white to-blue-400">
+      <div className="flex flex-col mx-auto items-center justify-center min-h-screen bg-gradient-to-br from-white to-blue-400">
         <h1 className="text-4xl font-bold text-black mb-8">Sign In</h1>
         {errorMessage && (
           <p className="text-red-500 mb-4 font-bold text-xl">{errorMessage}</p>

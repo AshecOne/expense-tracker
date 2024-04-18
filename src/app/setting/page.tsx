@@ -109,7 +109,7 @@ const Setting: React.FunctionComponent<ISettingProps> = (props) => {
     <ClientOnly>
       <ProtectedRoute>
         <NavbarLayout>
-          <div className="container max-w-sm  mx-auto px-4 pt-8 pb-20 bg-gradient-to-br from-white to-blue-400">
+          <div className="container min-h-screen mx-auto px-4 pt-8 pb-20 bg-gradient-to-br from-white to-blue-400">
             <h1 className="text-2xl font-bold mb-4 text-black">Settings</h1>
             <form onSubmit={handleUpdateProfile} className="mb-8">
               <div className="mb-4">

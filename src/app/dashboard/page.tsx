@@ -7,6 +7,7 @@ import UserMenu from "@/components/UserMenu";
 import { FiArrowDownCircle, FiArrowUpCircle } from "react-icons/fi";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import ClientOnly from "@/components/ClientOnly";
+import { ClipLoader } from "react-spinners";
 
 interface IDashboardProps {}
 
@@ -23,9 +24,11 @@ const Dashboard: React.FunctionComponent<IDashboardProps> = (props) => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const user = useAppSelector((state: any) => state.user);
   const dispatch = useAppDispatch();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       console.log(`Fetching transactions for user ID: ${user.id}`);
       try {
         if (!user.id) return;
@@ -49,6 +52,8 @@ const Dashboard: React.FunctionComponent<IDashboardProps> = (props) => {
         setTransactions(convertedTransactions);
       } catch (error) {
         console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -93,7 +98,11 @@ const Dashboard: React.FunctionComponent<IDashboardProps> = (props) => {
                   className="text-lg text-black font-semibold cursor-pointer hover:underline hover:text-blue-600 hover:font-extrabold"
                   onClick={toggleUserMenu}
                 >
-                  Hi, {user.name}
+                  Hi,{" "}
+                  {user.name
+                    .split(" ")
+                    .map((word: string) => word.charAt(0).toUpperCase())
+                    .join("")}
                 </div>
                 {isUserMenuOpen && <UserMenu onClose={toggleUserMenu} />}
               </div>
@@ -106,7 +115,11 @@ const Dashboard: React.FunctionComponent<IDashboardProps> = (props) => {
               <h2 className="text-xl font-bold mb-4 text-black">
                 Last Transactions
               </h2>
-              {transactions.length === 0 ? (
+              {loading ? (
+                <div className="flex justify-center items-center mt-8">
+                  <ClipLoader color="#0b11df" size={40} />
+                </div>
+              ) : transactions.length === 0 ? (
                 <p className="text-black text-xl">No data available</p>
               ) : (
                 <ul>

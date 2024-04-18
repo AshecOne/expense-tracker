@@ -5,7 +5,7 @@ import GuestRoute from "@/components/GuestRoute";
 export default function Home() {
   return (
     <GuestRoute>
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-white to-blue-400">
+      <div className="min-h-screen mx-auto flex flex-col items-center justify-center bg-gradient-to-br from-white to-blue-400">
         <h1 className="text-4xl font-bold text-black mb-8 text-center">
           Welcome to Money Tracker
         </h1>

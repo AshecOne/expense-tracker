@@ -3,28 +3,21 @@ import * as React from "react";
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useAppDispatch } from "@/lib/hooks";
-import { setUser } from "@/lib/features/userSlice";
 import Link from "next/link";
 import GuestRoute from "@/components/GuestRoute";
 
 interface ISignUpProps {}
 
 const SignUp: React.FunctionComponent<ISignUpProps> = (props) => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const router = useRouter();
-  const [errorMessage, setErrorMessage] = useState("");
-
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
+    const router = useRouter();
+    const [errorMessage, setErrorMessage] = useState("");
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Attempting to submit form with data:", {
-      name,
-      email,
-      password,
-    });
     try {
       const response = await axios.post(
         "https://secure-basin-94383-7efd7c1abae1.herokuapp.com/users/signup",
@@ -58,7 +51,7 @@ const SignUp: React.FunctionComponent<ISignUpProps> = (props) => {
 
   return (
     <GuestRoute>
-      <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-white to-blue-400">
+      <div className="flex flex-col mx-auto items-center justify-center min-h-screen bg-gradient-to-br from-white to-blue-400">
         <h1 className="text-4xl font-bold text-black mb-8">Sign Up</h1>
         {errorMessage && (
           <p className="text-red-500 mb-4 text-xl font-bold">{errorMessage}</p>
