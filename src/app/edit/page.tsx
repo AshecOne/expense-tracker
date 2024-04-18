@@ -19,19 +19,18 @@ const Edit: React.FunctionComponent = () => {
   const [date, setDate] = useState("");
   const user = useAppSelector((state: any) => state.user);
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const transactionId = searchParams.get("id");
-
-  const { id } = useParams();
+  const [searchParams, setSearchParams] = useState<URLSearchParams | null>(
+    null
+  );
 
   useEffect(() => {
-    async function fetchTransaction() {
+    const transactionId = searchParams?.get("id");
+
+    const fetchTransaction = async (transactionId: string) => {
       try {
         const response = await axios.get(
           `https://secure-basin-94383-7efd7c1abae1.herokuapp.com/users/transactions/${transactionId}`,
-          {
-            withCredentials: true,
-          }
+          { withCredentials: true }
         );
         const { type, amount, description, category, date } = response.data;
         setType(type);
@@ -42,38 +41,48 @@ const Edit: React.FunctionComponent = () => {
       } catch (error) {
         console.error("Error fetching transaction:", error);
       }
-    }
+    };
 
     if (transactionId) {
-      fetchTransaction();
+      fetchTransaction(transactionId);
     }
-  }, [transactionId]);
+  }, [searchParams]);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      setSearchParams(params);
+    }
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      await axios.put(
-        `https://secure-basin-94383-7efd7c1abae1.herokuapp.com/users/transactions/${transactionId}`,
-        {
-          type,
-          amount: parseFloat(amount),
-          description,
-          category,
-          date,
-          userId: user.id,
-        },
-        { withCredentials: true }
-      );
-      toast.success("Transaction updated successfully");
-      router.push("/sortir");
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        toast.error(
-          "Failed to update transaction: " +
-            (error.response?.data.message || "Unknown error")
+    const transactionId = searchParams?.get("id");
+    if (transactionId) {
+      try {
+        await axios.put(
+          `https://secure-basin-94383-7efd7c1abae1.herokuapp.com/users/transactions/${transactionId}`,
+          {
+            type,
+            amount: parseFloat(amount),
+            description,
+            category,
+            date,
+            userId: user.id,
+          },
+          { withCredentials: true }
         );
-      } else {
-        toast.error("An unexpected error occurred");
+        toast.success("Transaction updated successfully");
+        router.push("/sortir");
+      } catch (error) {
+        if (axios.isAxiosError(error)) {
+          toast.error(
+            "Failed to update transaction: " +
+              (error.response?.data.message || "Unknown error")
+          );
+        } else {
+          toast.error("An unexpected error occurred");
+        }
       }
     }
   };

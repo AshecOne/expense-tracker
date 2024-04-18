@@ -1,6 +1,6 @@
 "use client";
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useCallback, useState, useEffect } from "react";
 import axios from "axios";
 import { useAppSelector } from "@/lib/hooks";
 import NavbarLayout from "../NavbarLayout";
@@ -34,7 +34,7 @@ const Sortir: React.FunctionComponent<ISortirProps> = (props) => {
   );
   const router = useRouter();
 
-  const fetchTransactions = async () => {
+  const fetchTransactions = useCallback(async () => {
     try {
       setLoading(true);
       const response = await axios.get(
@@ -70,7 +70,7 @@ const Sortir: React.FunctionComponent<ISortirProps> = (props) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [user.id]);
 
   const handleFilter = async () => {
     console.log("Filtering with", { dateRange, type, category });
