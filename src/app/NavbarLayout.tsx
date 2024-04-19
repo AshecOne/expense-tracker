@@ -2,15 +2,9 @@ import Navbar from "../components/Navbar";
 import React from "react";
 import { useAppDispatch } from "@/lib/hooks";
 import { setUser } from "@/lib/features/userSlice";
-import { usePathname } from "next/navigation";
 
-export default function NavbarLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function NavbarLayout({ children }: { children: React.ReactNode }) {
   const dispatch = useAppDispatch();
-  const pathname = usePathname();
 
   React.useEffect(() => {
     const loadUserFromStorage = () => {
@@ -25,12 +19,10 @@ export default function NavbarLayout({
     loadUserFromStorage();
   }, [dispatch]);
 
-  const isDashboard = pathname === "/dashboard";
-
   return (
     <div>
       {children}
-      {!isDashboard && <Navbar />}
+      <Navbar />
     </div>
   );
 }
