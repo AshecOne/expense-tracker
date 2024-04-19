@@ -40,7 +40,7 @@ const SignIn: React.FunctionComponent<ISignInProps> = (props) => {
       }
       toast.success("Sign in successful!", {
         autoClose: 2000,
-        onClose: () => setTimeout(() => router.push("/dashboard"), 500),
+        onClose: () => router.push("/dashboard"),
       });
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
