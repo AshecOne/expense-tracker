@@ -12,7 +12,7 @@ import { useRouter, useParams, useSearchParams } from "next/navigation";
 import { ClipLoader } from "react-spinners";
 
 const Edit: React.FunctionComponent = () => {
-  const [type, setType] = useState("expense");
+  const [type, setType] = useState("");
   const [amount, setAmount] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
@@ -25,7 +25,6 @@ const Edit: React.FunctionComponent = () => {
 
   useEffect(() => {
     const transactionId = searchParams?.get("id");
-
     const fetchTransaction = async (transactionId: string) => {
       try {
         const response = await axios.get(
