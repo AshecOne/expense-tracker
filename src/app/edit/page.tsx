@@ -123,130 +123,126 @@ const Edit: React.FunctionComponent = () => {
             }
           >
             <div className="min-h-screen mx-auto px-4 py-8 bg-gradient-to-br from-white to-blue-400">
-              <div className="min-h-screen mx-auto px-4 py-8 bg-gradient-to-br from-white to-blue-400">
-                <div className="min-h-screen mx-auto px-4 py-8 bg-gradient-to-br from-white to-blue-400">
-                  <h2 className="text-2xl font-bold mb-4 text-black">
-                    Edit Transaction
-                  </h2>
-                  <form onSubmit={handleSubmit}>
-                    <div className="mb-4">
-                      <label
-                        htmlFor="type"
-                        className="block mb-2 text-black font-bold"
-                      >
-                        Type:
-                      </label>
-                      <div className="flex items-center">
-                        <button
-                          type="button"
-                          className={`px-4 py-2 rounded-l ${
-                            type === "expense"
-                              ? "bg-blue-500 text-white"
-                              : "bg-gray-300 text-black"
-                          }`}
-                          onClick={() => handleTypeChange("expense")}
-                        >
-                          Expense
-                        </button>
-                        <button
-                          type="button"
-                          className={`px-4 py-2 rounded-r ${
-                            type === "income"
-                              ? "bg-blue-500 text-white"
-                              : "bg-gray-300 text-black"
-                          }`}
-                          onClick={() => handleTypeChange("income")}
-                        >
-                          Income
-                        </button>
-                      </div>
-                    </div>
-                    <div className="mb-4">
-                      <label
-                        htmlFor="date"
-                        className="block mb-2 text-black font-bold"
-                      >
-                        Date:
-                      </label>
-                      <input
-                        type="date"
-                        id="date"
-                        value={date}
-                        onChange={handleDateChange}
-                        className="w-full px-4 py-2 border rounded text-black"
-                        required
-                      />
-                    </div>
-                    <div className="mb-4">
-                      <label
-                        htmlFor="category"
-                        className="block mb-2 text-black font-bold"
-                      >
-                        Category:
-                      </label>
-                      <input
-                        type="text"
-                        id="category"
-                        value={category}
-                        onChange={handleCategoryChange}
-                        className="w-full px-4 py-2 border rounded text-black"
-                        required
-                      />
-                    </div>
-                    <div className="mb-4">
-                      <label
-                        htmlFor="description"
-                        className="block mb-2 text-black font-bold"
-                      >
-                        Description (Optional):
-                      </label>
-                      <input
-                        type="text"
-                        id="description"
-                        value={description}
-                        onChange={handleDescriptionChange}
-                        className="w-full px-4 py-2 border rounded text-black"
-                      />
-                    </div>
-                    <div className="mb-4">
-                      <label
-                        htmlFor="amount"
-                        className="block mb-2 text-black font-bold"
-                      >
-                        Total:
-                      </label>
-                      <input
-                        type="number"
-                        id="amount"
-                        value={amount}
-                        onChange={handleAmountChange}
-                        className="w-full px-4 py-2 border rounded text-black"
-                        required
-                      />
-                    </div>
-                    <div className="flex justify-center space-x-4">
-                      <button
-                        type="button"
-                        className="px-4 py-2 bg-gray-300 rounded text-black"
-                        onClick={() => {
-                          setAmount("");
-                          setDescription("");
-                          setCategory("");
-                          setDate("");
-                        }}
-                      >
-                        Cancel
-                      </button>
-                      <button
-                        type="submit"
-                        className="px-4 py-2 bg-blue-600 text-white rounded"
-                      >
-                        Save
-                      </button>
-                    </div>
-                  </form>
+              <h2 className="text-2xl font-bold mb-4 text-black">
+                Edit Transaction
+              </h2>
+              <form onSubmit={handleSubmit}>
+                <div className="mb-4">
+                  <label
+                    htmlFor="type"
+                    className="block mb-2 text-black font-bold"
+                  >
+                    Type:
+                  </label>
+                  <div className="flex items-center">
+                    <button
+                      type="button"
+                      className={`px-4 py-2 rounded-l ${
+                        type === "expense"
+                          ? "bg-blue-500 text-white"
+                          : "bg-gray-300 text-black"
+                      }`}
+                      onClick={() => handleTypeChange("expense")}
+                    >
+                      Expense
+                    </button>
+                    <button
+                      type="button"
+                      className={`px-4 py-2 rounded-r ${
+                        type === "income"
+                          ? "bg-blue-500 text-white"
+                          : "bg-gray-300 text-black"
+                      }`}
+                      onClick={() => handleTypeChange("income")}
+                    >
+                      Income
+                    </button>
+                  </div>
                 </div>
-              </div>
+                <div className="mb-4">
+                  <label
+                    htmlFor="date"
+                    className="block mb-2 text-black font-bold"
+                  >
+                    Date:
+                  </label>
+                  <input
+                    type="date"
+                    id="date"
+                    value={date}
+                    onChange={handleDateChange}
+                    className="w-full px-4 py-2 border rounded text-black"
+                    required
+                  />
+                </div>
+                <div className="mb-4">
+                  <label
+                    htmlFor="category"
+                    className="block mb-2 text-black font-bold"
+                  >
+                    Category:
+                  </label>
+                  <input
+                    type="text"
+                    id="category"
+                    value={category}
+                    onChange={handleCategoryChange}
+                    className="w-full px-4 py-2 border rounded text-black"
+                    required
+                  />
+                </div>
+                <div className="mb-4">
+                  <label
+                    htmlFor="description"
+                    className="block mb-2 text-black font-bold"
+                  >
+                    Description (Optional):
+                  </label>
+                  <input
+                    type="text"
+                    id="description"
+                    value={description}
+                    onChange={handleDescriptionChange}
+                    className="w-full px-4 py-2 border rounded text-black"
+                  />
+                </div>
+                <div className="mb-4">
+                  <label
+                    htmlFor="amount"
+                    className="block mb-2 text-black font-bold"
+                  >
+                    Total:
+                  </label>
+                  <input
+                    type="number"
+                    id="amount"
+                    value={amount}
+                    onChange={handleAmountChange}
+                    className="w-full px-4 py-2 border rounded text-black"
+                    required
+                  />
+                </div>
+                <div className="flex justify-center space-x-4">
+                  <button
+                    type="button"
+                    className="px-4 py-2 bg-gray-300 rounded text-black"
+                    onClick={() => {
+                      setAmount("");
+                      setDescription("");
+                      setCategory("");
+                      setDate("");
+                    }}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="px-4 py-2 bg-blue-600 text-white rounded"
+                  >
+                    Save
+                  </button>
+                </div>
+              </form>
             </div>
           </Suspense>
           <ToastContainer />

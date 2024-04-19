@@ -11,7 +11,7 @@ const Navbar: React.FunctionComponent<INavbarProps> = (props) => {
   return (
     <>
       {!isDashboard && (
-        <div className="fixed top-0 right-0 m-4">
+        <div className="absolute top-0 right-0 m-4">
           <Link href="/dashboard" aria-label="Dashboard">
             <FiHome size={24} className="text-black hover:text-blue-600 transition-colors duration-200" />
           </Link>
