@@ -8,21 +8,24 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 import ClientOnly from "@/components/ClientOnly";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useRouter, useParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { ClipLoader } from "react-spinners";
 
 const Edit: React.FunctionComponent = () => {
-  const [type, setType] = useState("");
+  const [type, setType] = useState("expense");
   const [amount, setAmount] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [date, setDate] = useState("");
   const user = useAppSelector((state: any) => state.user);
   const router = useRouter();
-  const { id: transactionId } = useParams();
+  const [searchParams, setSearchParams] = useState<URLSearchParams | null>(
+    null
+  );
 
   useEffect(() => {
     const fetchTransaction = async () => {
+      const transactionId = searchParams?.get("id");
       if (transactionId) {
         try {
           const response = await axios.get(
@@ -40,12 +43,20 @@ const Edit: React.FunctionComponent = () => {
         }
       }
     };
-
+  
     fetchTransaction();
-  }, [transactionId]);
+  }, [searchParams]);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      setSearchParams(params);
+    }
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const transactionId = searchParams?.get("id");
     if (transactionId) {
       try {
         await axios.put(
