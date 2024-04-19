@@ -8,7 +8,7 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 import ClientOnly from "@/components/ClientOnly";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useRouter, useParams, useSearchParams } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import { ClipLoader } from "react-spinners";
 
 const Edit: React.FunctionComponent = () => {
@@ -19,44 +19,33 @@ const Edit: React.FunctionComponent = () => {
   const [date, setDate] = useState("");
   const user = useAppSelector((state: any) => state.user);
   const router = useRouter();
-  const [searchParams, setSearchParams] = useState<URLSearchParams | null>(
-    null
-  );
+  const { id: transactionId } = useParams();
 
   useEffect(() => {
-    const transactionId = searchParams?.get("id");
-    const fetchTransaction = async (transactionId: string) => {
-      try {
-        const response = await axios.get(
-          `https://secure-basin-94383-7efd7c1abae1.herokuapp.com/users/transactions/${transactionId}`,
-          { withCredentials: true }
-        );
-        const { type, amount, description, category, date } = response.data;
-        setType(type);
-        setAmount(amount.toString());
-        setDescription(description);
-        setCategory(category);
-        setDate(date);
-      } catch (error) {
-        console.error("Error fetching transaction:", error);
+    const fetchTransaction = async () => {
+      if (transactionId) {
+        try {
+          const response = await axios.get(
+            `https://secure-basin-94383-7efd7c1abae1.herokuapp.com/users/transactions/${transactionId}`,
+            { withCredentials: true }
+          );
+          const { type, amount, description, category, date } = response.data;
+          setType(type);
+          setAmount(amount.toString());
+          setDescription(description);
+          setCategory(category);
+          setDate(date);
+        } catch (error) {
+          console.error("Error fetching transaction:", error);
+        }
       }
     };
 
-    if (transactionId) {
-      fetchTransaction(transactionId);
-    }
-  }, [searchParams]);
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const params = new URLSearchParams(window.location.search);
-      setSearchParams(params);
-    }
-  }, []);
+    fetchTransaction();
+  }, [transactionId]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const transactionId = searchParams?.get("id");
     if (transactionId) {
       try {
         await axios.put(
