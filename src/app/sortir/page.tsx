@@ -143,8 +143,12 @@ const Sortir: React.FunctionComponent<ISortirProps> = (props) => {
   };
 
   useEffect(() => {
-    fetchTransactions();
-  }, []);
+    if (dateRange || type || category) {
+      handleFilter();
+    } else {
+      fetchTransactions();
+    }
+  }, [dateRange, type, category, fetchTransactions, handleFilter]);
 
   return (
     <ClientOnly>
