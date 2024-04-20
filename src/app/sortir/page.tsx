@@ -79,7 +79,9 @@ const Sortir: React.FunctionComponent<ISortirProps> = (props) => {
   
       if (dateRange) {
         const [startDate, endDate] = dateRange.split(" - ");
-        url += `&startDate=${startDate}&endDate=${endDate}`;
+        if (startDate && endDate) {
+          url += `&startDate=${startDate}&endDate=${endDate}`;
+        }
       }
   
       if (type) {
