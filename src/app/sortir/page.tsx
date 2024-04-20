@@ -76,30 +76,35 @@ const Sortir: React.FunctionComponent<ISortirProps> = (props) => {
     console.log("Filtering with", { dateRange, type, category });
     try {
       let url = `https://secure-basin-94383-7efd7c1abae1.herokuapp.com/users/transactions/filter?userId=${user.id}`;
-
+  
       if (dateRange) {
-        const [startDate, endDate] = dateRange.split(" ");
+        const [startDate, endDate] = dateRange.split(" - ");
         url += `&startDate=${startDate}&endDate=${endDate}`;
       }
-
+  
       if (type) {
         url += `&type=${type}`;
       }
-
+  
       if (category) {
         url += `&category=${category}`;
       }
-
+  
+      console.log("Request URL:", url);
+  
       const response = await axios.get(url, {
         withCredentials: true,
       });
-      console.log("Filtered data", response.data);
+  
+      console.log("Filtered data:", response.data);
+  
       const convertedTransactions = response.data.map(
         (transaction: ITransaction) => ({
           ...transaction,
           amount: Number(transaction.amount),
         })
       );
+  
       setTransactions(convertedTransactions);
     } catch (error) {
       console.error("Error filtering transactions:", error);
