@@ -29,15 +29,13 @@ const Sortir: React.FunctionComponent<ISortirProps> = (props) => {
   const user = useAppSelector((state: any) => state.user);
   const [loading, setLoading] = useState(true);
   const [deleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
-  const [transactionToDelete, setTransactionToDelete] = useState<number | null>(
-    null
-  );
+  const [transactionToDelete, setTransactionToDelete] = useState<number | null>(null);
   const router = useRouter();
 
   const fetchTransactions = useCallback(async (params?: { startDate?: string; endDate?: string; type?: string; category?: string }) => {
     try {
       setLoading(true);
-      let url = `https://secure-basin-94383-7efd7c1abae1.herokuapp.com/users/transactions?userId=${user.id}&orderBy=date&order=desc`;
+      let url = `https://secure-basin-94383-7efd7c1abae1.herokuapp.com/users/transactions?userId=${user.id}`;
 
       if (params) {
         const { startDate, endDate, type, category } = params;
@@ -100,6 +98,10 @@ const Sortir: React.FunctionComponent<ISortirProps> = (props) => {
     fetchTransactions(params);
   };
 
+  useEffect(() => {
+    fetchTransactions();
+  }, [fetchTransactions]);
+
   const handleDelete = async (transactionId: number) => {
     setTransactionToDelete(transactionId);
     setDeleteConfirmationOpen(true);
@@ -128,10 +130,6 @@ const Sortir: React.FunctionComponent<ISortirProps> = (props) => {
   const handleEdit = (transactionId: number) => {
     router.push(`/edit?id=${transactionId}`);
   };
-
-  useEffect(() => {
-    fetchTransactions();
-  }, [fetchTransactions]);
 
   return (
     <ClientOnly>
