@@ -39,16 +39,20 @@ const SignIn: React.FunctionComponent<ISignInProps> = (props) => {
         localStorage.setItem("user", JSON.stringify(response.data.user));
       }
       console.log("Before showing success toast");
-      setTimeout(() => {
-        toast.success("Sign in successful!", {
-          autoClose: 2000,
-          onClose: () => {
-            console.log("Success toast closed");
-            console.log("Navigating to dashboard");
+      toast.success("Sign in successful!", {
+        autoClose: 2000,
+        onClose: () => {
+          // Tambahkan delay di sini jika perlu
+          setTimeout(() => {
+            dispatch(setUser(response.data.user));
+            if (typeof window !== "undefined") {
+              localStorage.setItem("user", JSON.stringify(response.data.user));
+            }
             router.push("/dashboard");
-          },
-        });
-      }, 0);
+          }, 500); // Ini akan menunda navigasi sampai toast ditutup
+        },
+      });
+      
       console.log("After showing success toast");
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
