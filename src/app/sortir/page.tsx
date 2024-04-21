@@ -82,27 +82,38 @@ const Sortir: React.FunctionComponent<ISortirProps> = (props) => {
         const [startDate, endDate] = dateRange.split(" - ");
         if (startDate && endDate) {
           url += `&startDate=${startDate}&endDate=${endDate}`;
+          console.log("Date range:", startDate, endDate);
         }
       }
   
       if (type) {
         url += `&type=${type}`;
+        console.log("Type:", type);
       }
   
       if (category) {
         url += `&category=${category}`;
+        console.log("Category:", category);
       }
+  
+      console.log("Final URL:", url);
   
       const response = await axios.get(url, {
         withCredentials: true,
       });
-      console.log("Filtered data", response.data);
+  
+      console.log("Response status:", response.status);
+      console.log("Response data:", response.data);
+  
       const convertedTransactions = response.data.map(
         (transaction: ITransaction) => ({
           ...transaction,
           amount: Number(transaction.amount),
         })
       );
+  
+      console.log("Converted transactions:", convertedTransactions);
+  
       setTransactions(convertedTransactions);
     } catch (error) {
       console.error("Error filtering transactions:", error);
