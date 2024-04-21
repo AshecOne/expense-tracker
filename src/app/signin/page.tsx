@@ -47,7 +47,7 @@ const SignIn: React.FunctionComponent<ISignInProps> = (props) => {
               localStorage.setItem("user", JSON.stringify(response.data.user));
             }
             router.push("/dashboard");
-          }, 500); // Ini akan menunda navigasi sampai toast ditutup
+          }, 5000); // Ini akan menunda navigasi sampai toast ditutup
         },
       });
       
