@@ -20,7 +20,6 @@ const SignIn: React.FunctionComponent<ISignInProps> = (props) => {
   const dispatch = useAppDispatch();
   const [isSignedIn, setIsSignedIn] = useState(false);
 
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Attempting to sign in with email:", email);
@@ -36,22 +35,11 @@ const SignIn: React.FunctionComponent<ISignInProps> = (props) => {
         }
       );
       console.log(response.data);
-      console.log("Before showing success toast");
-      toast.success("Sign in successful!", {
-        autoClose: 2000,
-        onClose: () => {
-          // Tambahkan delay di sini jika perlu
-          setTimeout(() => {
-            dispatch(setUser(response.data.user));
-            if (typeof window !== "undefined") {
-              localStorage.setItem("user", JSON.stringify(response.data.user));
-            }
-            router.push("/dashboard");
-          }, 5000); // Ini akan menunda navigasi sampai toast ditutup
-        },
-      });
-      
-      console.log("After showing success toast");
+      dispatch(setUser(response.data.user));
+      if (typeof window !== "undefined") {
+        localStorage.setItem("user", JSON.stringify(response.data.user));
+      }
+      router.push("/dashboard");
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
         console.error("Error response data:", error.response?.data);
