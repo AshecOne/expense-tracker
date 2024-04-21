@@ -18,6 +18,7 @@ const SignIn: React.FunctionComponent<ISignInProps> = (props) => {
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const [isSignedIn, setIsSignedIn] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,17 +43,10 @@ const SignIn: React.FunctionComponent<ISignInProps> = (props) => {
       toast.success("Sign in successful!", {
         autoClose: 2000,
         onClose: () => {
-          // Tambahkan delay di sini jika perlu
-          setTimeout(() => {
-            dispatch(setUser(response.data.user));
-            if (typeof window !== "undefined") {
-              localStorage.setItem("user", JSON.stringify(response.data.user));
-            }
-            router.push("/dashboard");
-          }, 500); // Ini akan menunda navigasi sampai toast ditutup
+          setIsSignedIn(true);
         },
       });
-      
+
       console.log("After showing success toast");
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
@@ -71,6 +65,12 @@ const SignIn: React.FunctionComponent<ISignInProps> = (props) => {
     }
   };
 
+  React.useEffect(() => {
+    if (isSignedIn) {
+      router.push("/dashboard");
+    }
+  }, [isSignedIn, router]);
+  
   return (
     <GuestRoute>
       <div className="flex flex-col mx-auto items-center justify-center min-h-screen bg-gradient-to-br from-white to-blue-400">
