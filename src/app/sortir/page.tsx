@@ -286,7 +286,7 @@ const Sortir: React.FunctionComponent<ISortirProps> = (props) => {
                         Rp {transaction.amount.toFixed(2)}
                       </span>
                     </div>
-                    <div className="flex justify-center items-center text-black">
+                    <div className="flex py-3 text-black">
                       <span className="text-lg font-bold text-black">
                         Description:
                       </span>
