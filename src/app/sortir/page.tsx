@@ -45,7 +45,7 @@ const Sortir: React.FunctionComponent<ISortirProps> = (props) => {
         }
       );
       console.log(response.data);
-  
+
       if (response.data && Array.isArray(response.data.transactions)) {
         const convertedTransactions = response.data.transactions.map(
           (transaction: ITransaction) => ({
@@ -74,7 +74,6 @@ const Sortir: React.FunctionComponent<ISortirProps> = (props) => {
       setLoading(false);
     }
   }, [user.id]);
-  
 
   const handleFilter = async () => {
     console.log("Filtering with", { dateRange, type, category });
@@ -288,10 +287,15 @@ const Sortir: React.FunctionComponent<ISortirProps> = (props) => {
                       </span>
                     </div>
                     <div className="flex justify-center items-center text-black">
-                      {transaction.description && (
-                        <p className="text-lg text-opacity-75">
+                      <span className="text-lg font-bold text-black">
+                        Description:
+                      </span>
+                      {transaction.description ? (
+                        <p className="text-lg text-opacity-75 ml-2">
                           {transaction.description}
                         </p>
+                      ) : (
+                        <p className="text-lg text-opacity-75 ml-2">-</p>
                       )}
                     </div>
                     <div className="flex justify-between mt-4">
