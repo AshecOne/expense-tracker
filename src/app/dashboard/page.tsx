@@ -119,7 +119,7 @@ const Dashboard: React.FunctionComponent<IDashboardProps> = (props) => {
                 <p className="text-black text-xl">No data available</p>
               ) : (
                 <ul>
-                  {transactions.slice(0, 5).map((transaction) => (
+                  {transactions.map((transaction) => (
                     <li
                       key={transaction.id}
                       className="mb-4 bg-gray-100 rounded-lg shadow-md p-4 flex justify-between items-center"

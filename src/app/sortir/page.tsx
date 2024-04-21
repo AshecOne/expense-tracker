@@ -17,6 +17,7 @@ interface ITransaction {
   amount: number;
   date: string;
   category: string;
+  description?: string;
 }
 
 interface ISortirProps {}
@@ -38,18 +39,19 @@ const Sortir: React.FunctionComponent<ISortirProps> = (props) => {
     try {
       setLoading(true);
       const response = await axios.get(
-        `https://secure-basin-94383-7efd7c1abae1.herokuapp.com/users/transactions?userId=${user.id}&orderBy=date&order=desc`,
+        `https://secure-basin-94383-7efd7c1abae1.herokuapp.com/users/transactions/all?userId=${user.id}&orderBy=date&order=desc`,
         {
           withCredentials: true,
         }
       );
       console.log(response.data);
-
+  
       if (response.data && Array.isArray(response.data.transactions)) {
         const convertedTransactions = response.data.transactions.map(
           (transaction: ITransaction) => ({
             ...transaction,
             amount: Number(transaction.amount),
+            description: transaction.description,
           })
         );
         setTransactions(convertedTransactions);
@@ -58,6 +60,7 @@ const Sortir: React.FunctionComponent<ISortirProps> = (props) => {
           (transaction: ITransaction) => ({
             ...transaction,
             amount: Number(transaction.amount),
+            description: transaction.description,
           })
         );
         setTransactions(convertedTransactions);
@@ -71,13 +74,14 @@ const Sortir: React.FunctionComponent<ISortirProps> = (props) => {
       setLoading(false);
     }
   }, [user.id]);
+  
 
   const handleFilter = async () => {
     console.log("Filtering with", { dateRange, type, category });
     try {
       setLoading(true);
       let url = `https://secure-basin-94383-7efd7c1abae1.herokuapp.com/users/transactions/filter?userId=${user.id}`;
-  
+
       if (dateRange) {
         const [startDate, endDate] = dateRange.split(" - ");
         if (startDate && endDate) {
@@ -85,35 +89,35 @@ const Sortir: React.FunctionComponent<ISortirProps> = (props) => {
           console.log("Date range:", startDate, endDate);
         }
       }
-  
+
       if (type) {
         url += `&type=${type}`;
         console.log("Type:", type);
       }
-  
+
       if (category) {
         url += `&category=${category}`;
         console.log("Category:", category);
       }
-  
+
       console.log("Final URL:", url);
-  
+
       const response = await axios.get(url, {
         withCredentials: true,
       });
-  
+
       console.log("Response status:", response.status);
       console.log("Response data:", response.data);
-  
+
       const convertedTransactions = response.data.map(
         (transaction: ITransaction) => ({
           ...transaction,
           amount: Number(transaction.amount),
         })
       );
-  
+
       console.log("Converted transactions:", convertedTransactions);
-  
+
       setTransactions(convertedTransactions);
     } catch (error) {
       console.error("Error filtering transactions:", error);
@@ -282,6 +286,13 @@ const Sortir: React.FunctionComponent<ISortirProps> = (props) => {
                       <span className="text-xl font-bold text-black">
                         Rp {transaction.amount.toFixed(2)}
                       </span>
+                    </div>
+                    <div className="flex justify-center items-center text-black">
+                      {transaction.description && (
+                        <p className="text-lg text-opacity-75">
+                          {transaction.description}
+                        </p>
+                      )}
                     </div>
                     <div className="flex justify-between mt-4">
                       <button
