@@ -23,7 +23,6 @@ const SignIn: React.FunctionComponent<ISignInProps> = (props) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Attempting to sign in with email:", email);
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://secure-basin-94383-7efd7c1abae1.herokuapp.com';
     try {
       console.log("API URL:", process.env.NEXT_PUBLIC_API_URL);
       const response = await axios.post(
