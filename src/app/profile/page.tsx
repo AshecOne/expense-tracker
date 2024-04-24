@@ -23,7 +23,7 @@ const Profil: React.FunctionComponent<IProfilProps> = (props) => {
       console.log(`Fetching user data for user ID: ${user.id}`);
       try {
         const response = await axios.get(
-          `https://secure-basin-94383-7efd7c1abae1.herokuapp.com/users/?userId=${user.id}`,
+          `${process.env.NEXT_PUBLIC_API_URL}/users/?userId=${user.id}`,
           {
             withCredentials: true,
           }

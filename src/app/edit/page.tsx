@@ -29,7 +29,7 @@ const Edit: React.FunctionComponent = () => {
       if (transactionId) {
         try {
           const response = await axios.get(
-            `https://secure-basin-94383-7efd7c1abae1.herokuapp.com/users/transactions/${transactionId}`,
+            `${process.env.NEXT_PUBLIC_API_URL}/users/transactions/${transactionId}`,
             { withCredentials: true }
           );
           const { type, amount, description, category, date } = response.data;
@@ -60,7 +60,7 @@ const Edit: React.FunctionComponent = () => {
     if (transactionId) {
       try {
         await axios.put(
-          `https://secure-basin-94383-7efd7c1abae1.herokuapp.com/users/transactions/${transactionId}`,
+          `${process.env.NEXT_PUBLIC_API_URL}/users/transactions/${transactionId}`,
           {
             type,
             amount: parseFloat(amount),

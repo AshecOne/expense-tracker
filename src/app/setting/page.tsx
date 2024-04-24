@@ -34,7 +34,7 @@ const Setting: React.FunctionComponent<ISettingProps> = (props) => {
     console.log("Sending profile update with data:", { name, email });
     try {
       const response = await axios.put(
-        `https://secure-basin-94383-7efd7c1abae1.herokuapp.com/users/${user.id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/users/${user.id}`,
         {
           name,
           email,
@@ -78,7 +78,7 @@ const Setting: React.FunctionComponent<ISettingProps> = (props) => {
     console.log("Attempting to change password for user id:", user.id);
     try {
       await axios.put(
-        `https://secure-basin-94383-7efd7c1abae1.herokuapp.com/users/${user.id}/change-password`,
+        `${process.env.NEXT_PUBLIC_API_URL}/users/${user.id}/change-password`,
         {
           password,
         },

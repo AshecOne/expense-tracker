@@ -39,7 +39,7 @@ const Sortir: React.FunctionComponent<ISortirProps> = (props) => {
     try {
       setLoading(true);
       const response = await axios.get(
-        `https://secure-basin-94383-7efd7c1abae1.herokuapp.com/users/transactions/all?userId=${user.id}&orderBy=date&order=desc`,
+        `${process.env.NEXT_PUBLIC_API_URL}/users/transactions/all?userId=${user.id}&orderBy=date&order=desc`,
         {
           withCredentials: true,
         }
@@ -79,7 +79,7 @@ const Sortir: React.FunctionComponent<ISortirProps> = (props) => {
     console.log("Filtering with", { dateRange, type, category });
     try {
       setLoading(true);
-      let url = `https://secure-basin-94383-7efd7c1abae1.herokuapp.com/users/transactions/filter?userId=${user.id}`;
+      let url = `${process.env.NEXT_PUBLIC_API_URL}/users/transactions/filter?userId=${user.id}`;
 
       if (dateRange) {
         const [startDate, endDate] = dateRange.split(" - ");
@@ -137,7 +137,7 @@ const Sortir: React.FunctionComponent<ISortirProps> = (props) => {
     if (transactionToDelete) {
       try {
         await axios.delete(
-          `https://secure-basin-94383-7efd7c1abae1.herokuapp.com/users/transactions/${transactionToDelete}`,
+          `${process.env.NEXT_PUBLIC_API_URL}/users/transactions/${transactionToDelete}`,
           {
             withCredentials: true,
           }

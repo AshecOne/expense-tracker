@@ -25,7 +25,7 @@ const SignIn: React.FunctionComponent<ISignInProps> = (props) => {
     console.log("Attempting to sign in with email:", email);
     try {
       const response = await axios.post(
-        "https://secure-basin-94383-7efd7c1abae1.herokuapp.com/users/signin",
+        `${process.env.NEXT_PUBLIC_API_URL}/users/signin`,
         {
           email,
           password,

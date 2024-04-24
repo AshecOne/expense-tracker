@@ -33,7 +33,7 @@ const Dashboard: React.FunctionComponent<IDashboardProps> = (props) => {
       try {
         if (!user.id) return;
         const response = await axios.get(
-          `https://secure-basin-94383-7efd7c1abae1.herokuapp.com/users/transactions?userId=${user.id}`,
+          `${process.env.NEXT_PUBLIC_API_URL}/users/transactions?userId=${user.id}`,
           {
             withCredentials: true,
           }
