@@ -9,6 +9,7 @@ import Link from "next/link";
 import GuestRoute from "@/components/GuestRoute";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import GuestRouteSignIn from "@/components/GuestRouteSignIn";
 
 
 interface ISignInProps {}
@@ -21,6 +22,7 @@ const SignIn: React.FunctionComponent<ISignInProps> = (props) => {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
   const isLoggedIn = useAppSelector((state) => state.user.isLoggedIn);
+  const [isNavigating, setIsNavigating] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,8 +43,10 @@ const SignIn: React.FunctionComponent<ISignInProps> = (props) => {
       if (typeof window !== "undefined") {
         localStorage.setItem("user", JSON.stringify(response.data.user));
       }
-      toast.success(`Welcome, ${response.data.user.name}`);
-      return;
+      toast.success(`Welcome, ${response.data.user.name}`, {
+        autoClose: 2000,
+        onClose: () => setIsNavigating(true),
+      });
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
         console.error("Error response data:", error.response?.data);
@@ -60,21 +64,8 @@ const SignIn: React.FunctionComponent<ISignInProps> = (props) => {
     }
   };
 
-  React.useEffect(() => {
-    let toastDisplayed = false;
-  
-    if (isLoggedIn && !toastDisplayed) {
-      toast.success(`Welcome, ${user.name}`);
-      toastDisplayed = true;
-  
-      setTimeout(() => {
-        router.replace("/dashboard");
-      }, 3500);
-    }
-  }, [isLoggedIn, router, user.name]);
-
   return (
-    <GuestRoute>
+    <GuestRouteSignIn isNavigating={isNavigating} setIsNavigating={setIsNavigating}>
       <div className="flex flex-col mx-auto items-center justify-center min-h-screen bg-gradient-to-br from-white to-blue-400">
         <h1 className="text-4xl font-bold text-black mb-8">Sign In</h1>
         <form
@@ -137,7 +128,7 @@ const SignIn: React.FunctionComponent<ISignInProps> = (props) => {
         </p>
       </div>
       <ToastContainer />
-    </GuestRoute>
+    </GuestRouteSignIn>
   );
 };
 export default SignIn;
