@@ -40,12 +40,8 @@ const SignIn: React.FunctionComponent<ISignInProps> = (props) => {
       if (typeof window !== "undefined") {
         localStorage.setItem("user", JSON.stringify(response.data.user));
       }
-      console.log("Before toast.success");
-      toast.success(`Welcome, ${response.data.user.name}`, {
-        autoClose: 2000,
-        onClose: () => setIsNavigating(true),
-      });
-      console.log("After toast.success");
+      alert(`Welcome, ${response.data.user.name}`);
+      setIsNavigating(true);
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
         console.error("Error response data:", error.response?.data);
