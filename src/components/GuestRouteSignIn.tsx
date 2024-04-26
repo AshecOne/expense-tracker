@@ -17,8 +17,10 @@ const GuestRouteSignIn = ({
 
   React.useEffect(() => {
     if (isLoggedIn && !isNavigating) {
+      console.log("Setting isNavigating to true");
       setIsNavigating(true);
     } else if (isLoggedIn && isNavigating) {
+      console.log("Navigating to dashboard");
       router.push("/dashboard");
     }
   }, [isLoggedIn, isNavigating, router, setIsNavigating]);
