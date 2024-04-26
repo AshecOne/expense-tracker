@@ -6,11 +6,9 @@ import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { setUser } from "@/lib/features/userSlice";
 import Link from "next/link";
-import GuestRoute from "@/components/GuestRoute";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import GuestRouteSignIn from "@/components/GuestRouteSignIn";
-
 
 interface ISignInProps {}
 
@@ -18,10 +16,7 @@ const SignIn: React.FunctionComponent<ISignInProps> = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const router = useRouter();
   const dispatch = useAppDispatch();
-  const user = useAppSelector((state) => state.user);
-  const isLoggedIn = useAppSelector((state) => state.user.isLoggedIn);
   const [isNavigating, setIsNavigating] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -39,16 +34,18 @@ const SignIn: React.FunctionComponent<ISignInProps> = (props) => {
         }
       );
       console.log(response.data);
+      console.log("Before dispatching setUser");
       dispatch(setUser(response.data.user));
+      console.log("After dispatching setUser");
       if (typeof window !== "undefined") {
         localStorage.setItem("user", JSON.stringify(response.data.user));
       }
       console.log("Before toast.success");
-    toast.success(`Welcome, ${response.data.user.name}`, {
-      autoClose: 2000,
-      onClose: () => setIsNavigating(true),
-    });
-    console.log("After toast.success");
+      toast.success(`Welcome, ${response.data.user.name}`, {
+        autoClose: 2000,
+        onClose: () => setIsNavigating(true),
+      });
+      console.log("After toast.success");
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
         console.error("Error response data:", error.response?.data);
@@ -67,7 +64,10 @@ const SignIn: React.FunctionComponent<ISignInProps> = (props) => {
   };
 
   return (
-    <GuestRouteSignIn isNavigating={isNavigating} setIsNavigating={setIsNavigating}>
+    <GuestRouteSignIn
+      isNavigating={isNavigating}
+      setIsNavigating={setIsNavigating}
+    >
       <div className="flex flex-col mx-auto items-center justify-center min-h-screen bg-gradient-to-br from-white to-blue-400">
         <h1 className="text-4xl font-bold text-black mb-8">Sign In</h1>
         <form
