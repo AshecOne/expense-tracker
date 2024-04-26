@@ -3,12 +3,13 @@ import * as React from "react";
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { useAppDispatch } from "@/lib/hooks";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { setUser } from "@/lib/features/userSlice";
 import Link from "next/link";
 import GuestRoute from "@/components/GuestRoute";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 
 interface ISignInProps {}
 
@@ -18,13 +19,12 @@ const SignIn: React.FunctionComponent<ISignInProps> = (props) => {
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const [isSignedIn, setIsSignedIn] = useState(false);
+  const isLoggedIn = useAppSelector((state) => state.user.isLoggedIn);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Attempting to sign in with email:", email);
     try {
-      console.log("API URL:", process.env.NEXT_PUBLIC_API_URL);
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/users/signin`,
         {
@@ -40,7 +40,7 @@ const SignIn: React.FunctionComponent<ISignInProps> = (props) => {
       if (typeof window !== "undefined") {
         localStorage.setItem("user", JSON.stringify(response.data.user));
       }
-      router.push("/dashboard");
+      toast.success(`Welcome, ${response.data.user.name}`);
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
         console.error("Error response data:", error.response?.data);
@@ -57,6 +57,14 @@ const SignIn: React.FunctionComponent<ISignInProps> = (props) => {
       }
     }
   };
+
+  React.useEffect(() => {
+    if (isLoggedIn) {
+      setTimeout(() => {
+        router.replace("/dashboard");
+      }, 1500);
+    }
+  }, [isLoggedIn, router]);
 
   return (
     <GuestRoute>

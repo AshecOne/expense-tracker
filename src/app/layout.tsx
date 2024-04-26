@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import React from "react";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import StoreProvider from "./StoreProvider";
@@ -13,11 +12,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  React.useEffect(() => {
-    if (process.env.NODE_ENV === "production") {
-      console.log = console.warn = console.error = () => {};
-    }
-  }, []);
+
   return (
     <StoreProvider>
       <html lang="en">

@@ -21,7 +21,7 @@ const SignUp: React.FunctionComponent<ISignUpProps> = (props) => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://secure-basin-94383-7efd7c1abae1.herokuapp.com/users/signup",
+        `${process.env.NEXT_PUBLIC_API_URL}/users/signup`,
         {
           name,
           email,
