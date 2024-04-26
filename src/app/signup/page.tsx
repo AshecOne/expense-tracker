@@ -55,7 +55,10 @@ const SignUp: React.FunctionComponent<ISignUpProps> = (props) => {
 
   return (
     <GuestRoute>
-      <div className="flex flex-col mx-auto items-center justify-center min-h-screen bg-gradient-to-br from-white to-blue-400">
+       <div className="hidden md:flex md:flex-col md:mx-auto items-center justify-center bg-gradient-to-br from-white to-blue-400">
+        <p className="text-black font-extrabold text-2xl">This web app is only accessible on mobile devices.</p>
+      </div>
+      <div className="flex flex-col md:hidden lg:hidden mx-auto items-center justify-center min-h-screen bg-gradient-to-br from-white to-blue-400">
         <h1 className="text-4xl font-bold text-black mb-8">Sign Up</h1>
         <form
           onSubmit={handleSubmit}

@@ -90,7 +90,7 @@ const Dashboard: React.FunctionComponent<IDashboardProps> = (props) => {
     <ClientOnly>
       <ProtectedRoute>
         <NavbarLayout>
-          <div className="container mx-auto px-4 pt-8 pb-20 min-h-screen bg-gradient-to-br from-white to-blue-400">
+          <div className="container md:hidden lg:hidden mx-auto px-4 pt-8 pb-20 min-h-screen bg-gradient-to-br from-white to-blue-400">
             <div className="flex items-center justify-between mb-8">
               <h1 className="text-2xl font-bold text-black">Dashboard</h1>
               <div className="relative">

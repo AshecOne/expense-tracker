@@ -11,13 +11,13 @@ const Navbar: React.FunctionComponent<INavbarProps> = (props) => {
   return (
     <>
       {!isDashboard && (
-        <div className="absolute top-5 right-0 m-4">
+        <div className="absolute md:hidden lg:hidden top-5 right-0 m-4">
           <Link href="/dashboard" aria-label="Dashboard">
             <FiHome size={24} className="text-black hover:text-blue-600 transition-colors duration-200" />
           </Link>
         </div>
       )}
-      <nav className="bg-white shadow-lg fixed inset-x-0 bottom-0 z-10">
+      <nav className="bg-white md:hidden lg:hidden shadow-lg fixed inset-x-0 bottom-0 z-10">
         <div className="px-5 py-3 flex justify-around items-center">
           <Link href="/sortir" aria-label="Sortir" className="focus:outline-none hover:text-blue-600 transition-colors duration-200">
             <FiFile size={24} className="text-black hover:text-blue-600 transition-colors duration-200" />

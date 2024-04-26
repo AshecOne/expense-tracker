@@ -121,7 +121,7 @@ const Edit: React.FunctionComponent = () => {
               </div>
             }
           >
-            <div className="min-h-screen mx-auto px-4 py-8 bg-gradient-to-br from-white to-blue-400">
+            <div className="flex flex-col min-h-screen md:hidden lg:hidden mx-auto px-4 py-8 bg-gradient-to-br from-white to-blue-400">
               <h2 className="text-2xl font-bold mb-4 text-black">
                 Edit Transaction
               </h2>

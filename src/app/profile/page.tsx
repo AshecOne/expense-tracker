@@ -82,7 +82,7 @@ const Profil: React.FunctionComponent<IProfilProps> = (props) => {
     <ClientOnly>
       <ProtectedRoute>
         <NavbarLayout>
-          <div className="flex justify-center items-center mx-auto min-h-screen bg-gradient-to-br from-white to-blue-400">
+          <div className="flex md:hidden lg:hidden justify-center items-center mx-auto min-h-screen bg-gradient-to-br from-white to-blue-400">
             <div className="bg-white py-10 px-16 rounded-lg shadow-md w-auto text-center">
               <div className="flex items-center justify-center mb-6">
                 <div className="w-32 h-32 rounded-full bg-blue-400 flex items-center justify-center text-4xl font-bold text-white">
