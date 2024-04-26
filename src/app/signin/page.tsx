@@ -19,6 +19,7 @@ const SignIn: React.FunctionComponent<ISignInProps> = (props) => {
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.user);
   const isLoggedIn = useAppSelector((state) => state.user.isLoggedIn);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -41,6 +42,7 @@ const SignIn: React.FunctionComponent<ISignInProps> = (props) => {
         localStorage.setItem("user", JSON.stringify(response.data.user));
       }
       toast.success(`Welcome, ${response.data.user.name}`);
+      return;
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
         console.error("Error response data:", error.response?.data);
@@ -59,12 +61,17 @@ const SignIn: React.FunctionComponent<ISignInProps> = (props) => {
   };
 
   React.useEffect(() => {
-    if (isLoggedIn) {
+    let toastDisplayed = false;
+  
+    if (isLoggedIn && !toastDisplayed) {
+      toast.success(`Welcome, ${user.name}`);
+      toastDisplayed = true;
+  
       setTimeout(() => {
         router.replace("/dashboard");
       }, 3500);
     }
-  }, [isLoggedIn, router]);
+  }, [isLoggedIn, router, user.name]);
 
   return (
     <GuestRoute>
