@@ -62,7 +62,7 @@ const SignIn: React.FunctionComponent<ISignInProps> = (props) => {
     if (isLoggedIn) {
       setTimeout(() => {
         router.replace("/dashboard");
-      }, 1500);
+      }, 3500);
     }
   }, [isLoggedIn, router]);
 
