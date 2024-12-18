@@ -23,48 +23,48 @@ const Edit: React.FunctionComponent = () => {
     null
   );
 
-  useEffect(() => {
-    const fetchTransaction = async () => {
-      try {
-        // Dapatkan ID langsung dari URL saat komponen mount
-        const urlParams = new URLSearchParams(window.location.search);
-        const transactionId = urlParams.get("id");
+ useEffect(() => {
+  const fetchTransaction = async () => {
+    try {
+      
+      const urlParams = new URLSearchParams(window.location.search);
+      const transactionId = urlParams.get("id");
 
-        if (!transactionId) {
-          toast.error("No transaction ID provided");
-          router.push("/sortir");
-          return;
-        }
-
-        console.log("Fetching transaction ID:", transactionId);
-        
-        const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL}/users/transactions/${transactionId}`,
-          { withCredentials: true }
-        );
-
-        console.log("Transaction data:", response.data);
-
-        if (response.data.transaction) {
-          const { type, amount, description, category, date } = response.data.transaction;
-          setType(type);
-          setAmount(amount.toString());
-          setDescription(description || "");
-          setCategory(category);
-          setDate(new Date(date).toISOString().split('T')[0]);
-        } else {
-          toast.error("Transaction not found");
-          router.push("/sortir");
-        }
-      } catch (error) {
-        console.error("Error fetching transaction:", error);
-        toast.error("Failed to fetch transaction details");
+      if (!transactionId) {
+        toast.error("No transaction ID provided");
         router.push("/sortir");
+        return;
       }
-    };
 
-    fetchTransaction();
-  }, []);
+      console.log("Fetching transaction ID:", transactionId);
+      
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/users/transactions/${transactionId}`,
+        { withCredentials: true }
+      );
+
+      console.log("Transaction data:", response.data);
+
+      const { type, amount, description, category, date } = response.data;
+      setType(type);
+      setAmount(amount.toString());
+      setDescription(description || "");
+      setCategory(category);
+      setDate(date); 
+
+    } catch (error) {
+      console.error("Error fetching transaction:", error);
+      if (axios.isAxiosError(error)) {
+        toast.error(error.response?.data?.message || "Failed to fetch transaction details");
+      } else {
+        toast.error("Failed to fetch transaction details");
+      }
+      router.push("/sortir");
+    }
+  };
+
+  fetchTransaction();
+}, []);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -74,36 +74,42 @@ const Edit: React.FunctionComponent = () => {
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const transactionId = searchParams?.get("id");
-    if (transactionId) {
-      try {
-        await axios.put(
-          `${process.env.NEXT_PUBLIC_API_URL}/users/transactions/${transactionId}`,
-          {
-            type,
-            amount: parseFloat(amount),
-            description,
-            category,
-            date,
-            userId: user.id,
-          },
-          { withCredentials: true }
-        );
-        toast.success("Transaction updated successfully");
-        router.push("/sortir");
-      } catch (error) {
-        if (axios.isAxiosError(error)) {
-          toast.error(
-            "Failed to update transaction: " +
-              (error.response?.data.message || "Unknown error")
-          );
-        } else {
-          toast.error("An unexpected error occurred");
-        }
-      }
+  e.preventDefault();
+  const urlParams = new URLSearchParams(window.location.search);
+  const transactionId = urlParams.get("id");
+
+  if (!transactionId) {
+    toast.error("No transaction ID provided");
+    return;
+  }
+
+  try {
+    const response = await axios.put(
+      `${process.env.NEXT_PUBLIC_API_URL}/users/transactions/${transactionId}`,
+      {
+        type,
+        amount: parseFloat(amount),
+        description,
+        category,
+        date,
+        userId: user.id,
+      },
+      { withCredentials: true }
+    );
+
+    if (response.status === 200) {
+      toast.success("Transaction updated successfully");
+      router.push("/sortir");
     }
-  };
+  } catch (error) {
+    console.error("Update error:", error);
+    if (axios.isAxiosError(error)) {
+      toast.error(error.response?.data?.message || "Failed to update transaction");
+    } else {
+      toast.error("An unexpected error occurred");
+    }
+  }
+};
 
   const handleTypeChange = (newType: string) => {
     console.log(`Transaction type changed to: ${newType}`);
