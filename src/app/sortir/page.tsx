@@ -166,22 +166,26 @@ const handleFilter = async () => {
   <label htmlFor="dateRange" className="block mb-2 font-bold text-black">
     Date Range:
   </label>
-  <div className="flex items-center space-x-2">
-    <input
-      type="date" 
-      id="startDate"
-      value={startDate}
-      onChange={(e) => setStartDate(e.target.value)}
-      className="w-full px-4 py-2 border rounded text-black"
-    />
-    <span>to</span>
-    <input
-      type="date" 
-      id="endDate"
-      value={endDate}
-      onChange={(e) => setEndDate(e.target.value)}
-      className="w-full px-4 py-2 border rounded text-black"
-    />
+  <div className="flex flex-col sm:flex-row gap-2 items-center">
+    <div className="w-full sm:w-[140px]">
+      <input
+        type="date" 
+        id="startDate"
+        value={startDate}
+        onChange={(e) => setStartDate(e.target.value)}
+        className="w-full px-2 py-2 border rounded text-black text-sm"
+      />
+    </div>
+    <span className="text-black">to</span>
+    <div className="w-full sm:w-[140px]">
+      <input
+        type="date" 
+        id="endDate"
+        value={endDate}
+        onChange={(e) => setEndDate(e.target.value)}
+        className="w-full px-2 py-2 border rounded text-black text-sm"
+      />
+    </div>
   </div>
 </div>
                 <div>
