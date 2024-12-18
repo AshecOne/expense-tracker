@@ -25,27 +25,46 @@ const Edit: React.FunctionComponent = () => {
 
   useEffect(() => {
     const fetchTransaction = async () => {
-      const transactionId = searchParams?.get("id");
-      if (transactionId) {
-        try {
-          const response = await axios.get(
-            `${process.env.NEXT_PUBLIC_API_URL}/users/transactions/${transactionId}`,
-            { withCredentials: true }
-          );
-          const { type, amount, description, category, date } = response.data;
+      try {
+        // Dapatkan ID langsung dari URL saat komponen mount
+        const urlParams = new URLSearchParams(window.location.search);
+        const transactionId = urlParams.get("id");
+
+        if (!transactionId) {
+          toast.error("No transaction ID provided");
+          router.push("/sortir");
+          return;
+        }
+
+        console.log("Fetching transaction ID:", transactionId);
+        
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/users/transactions/${transactionId}`,
+          { withCredentials: true }
+        );
+
+        console.log("Transaction data:", response.data);
+
+        if (response.data.transaction) {
+          const { type, amount, description, category, date } = response.data.transaction;
           setType(type);
           setAmount(amount.toString());
-          setDescription(description);
+          setDescription(description || "");
           setCategory(category);
-          setDate(date);
-        } catch (error) {
-          console.error("Error fetching transaction:", error);
+          setDate(new Date(date).toISOString().split('T')[0]);
+        } else {
+          toast.error("Transaction not found");
+          router.push("/sortir");
         }
+      } catch (error) {
+        console.error("Error fetching transaction:", error);
+        toast.error("Failed to fetch transaction details");
+        router.push("/sortir");
       }
     };
-  
+
     fetchTransaction();
-  }, [searchParams]);
+  }, []);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
