@@ -24,7 +24,6 @@ interface ISortirProps {}
 
 const Sortir: React.FunctionComponent<ISortirProps> = (props) => {
   const [transactions, setTransactions] = useState<ITransaction[]>([]);
-  const [dateRange, setDateRange] = useState("");
   const [type, setType] = useState("");
   const [category, setCategory] = useState("");
   const user = useAppSelector((state: any) => state.user);
@@ -34,6 +33,8 @@ const Sortir: React.FunctionComponent<ISortirProps> = (props) => {
     null
   );
   const router = useRouter();
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
 
   const fetchTransactions = useCallback(async () => {
     try {
@@ -80,11 +81,15 @@ const handleFilter = async () => {
     setLoading(true);
     let url = `${process.env.NEXT_PUBLIC_API_URL}/users/transactions/filter?userId=${user.id}`;
 
-    if (dateRange) {
-      const [startDate, endDate] = dateRange.split(" - ");
-      if (startDate && endDate) {
-        url += `&startDate=${encodeURIComponent(startDate)}&endDate=${encodeURIComponent(endDate)}`;
+    // Gunakan startDate dan endDate langsung
+    if (startDate && endDate) {
+      // Validasi tanggal
+      if (startDate > endDate) {
+        toast.error("Start date cannot be later than end date");
+        setLoading(false);
+        return;
       }
+      url += `&startDate=${encodeURIComponent(startDate)}&endDate=${encodeURIComponent(endDate)}`;
     }
 
     if (type) {
@@ -95,7 +100,7 @@ const handleFilter = async () => {
       url += `&category=${encodeURIComponent(category)}`;
     }
 
-    console.log("Requesting URL:", url);
+    console.log("Final URL:", url);
 
     const response = await axios.get(url, {
       withCredentials: true,
@@ -158,21 +163,27 @@ const handleFilter = async () => {
             <div className="bg-white p-4 rounded shadow mb-8">
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div>
-                  <label
-                    htmlFor="dateRange"
-                    className="block mb-2 font-bold text-black"
-                  >
-                    Date Range:
-                  </label>
-                  <input
-                    type="text"
-                    id="dateRange"
-                    value={dateRange}
-                    onChange={(e) => setDateRange(e.target.value)}
-                    placeholder="YYYY-MM-DD - YYYY-MM-DD"
-                    className="w-full px-4 py-2 border rounded text-black"
-                  />
-                </div>
+  <label htmlFor="dateRange" className="block mb-2 font-bold text-black">
+    Date Range:
+  </label>
+  <div className="flex items-center space-x-2">
+    <input
+      type="date" 
+      id="startDate"
+      value={startDate}
+      onChange={(e) => setStartDate(e.target.value)}
+      className="w-full px-4 py-2 border rounded text-black"
+    />
+    <span>to</span>
+    <input
+      type="date" 
+      id="endDate"
+      value={endDate}
+      onChange={(e) => setEndDate(e.target.value)}
+      className="w-full px-4 py-2 border rounded text-black"
+    />
+  </div>
+</div>
                 <div>
                   <label
                     htmlFor="type"
