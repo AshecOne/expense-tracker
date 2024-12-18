@@ -75,55 +75,46 @@ const Sortir: React.FunctionComponent<ISortirProps> = (props) => {
     }
   }, [user.id]);
 
-  const handleFilter = async () => {
-    console.log("Filtering with", { dateRange, type, category });
-    try {
-      setLoading(true);
-      let url = `${process.env.NEXT_PUBLIC_API_URL}/users/transactions/filter?userId=${user.id}`;
+const handleFilter = async () => {
+  try {
+    setLoading(true);
+    let url = `${process.env.NEXT_PUBLIC_API_URL}/users/transactions/filter?userId=${user.id}`;
 
-      if (dateRange) {
-        const [startDate, endDate] = dateRange.split(" - ");
-        if (startDate && endDate) {
-          url += `&startDate=${startDate}&endDate=${endDate}`;
-          console.log("Date range:", startDate, endDate);
-        }
+    if (dateRange) {
+      const [startDate, endDate] = dateRange.split(" - ");
+      if (startDate && endDate) {
+        url += `&startDate=${encodeURIComponent(startDate)}&endDate=${encodeURIComponent(endDate)}`;
       }
-
-      if (type) {
-        url += `&type=${type}`;
-        console.log("Type:", type);
-      }
-
-      if (category) {
-        url += `&category=${category}`;
-        console.log("Category:", category);
-      }
-
-      console.log("Final URL:", url);
-
-      const response = await axios.get(url, {
-        withCredentials: true,
-      });
-
-      console.log("Response status:", response.status);
-      console.log("Response data:", response.data);
-
-      const convertedTransactions = response.data.map(
-        (transaction: ITransaction) => ({
-          ...transaction,
-          amount: Number(transaction.amount),
-        })
-      );
-
-      console.log("Converted transactions:", convertedTransactions);
-
-      setTransactions(convertedTransactions);
-    } catch (error) {
-      console.error("Error filtering transactions:", error);
-    } finally {
-      setLoading(false);
     }
-  };
+
+    if (type) {
+      url += `&type=${encodeURIComponent(type)}`;
+    }
+
+    if (category) {
+      url += `&category=${encodeURIComponent(category)}`;
+    }
+
+    console.log("Requesting URL:", url);
+
+    const response = await axios.get(url, {
+      withCredentials: true,
+    });
+
+    console.log("Filter Response:", response.data);
+
+    if (response.data && response.data.transactions) {
+      setTransactions(response.data.transactions);
+    } else {
+      setTransactions([]);
+    }
+  } catch (error) {
+    console.error("Error filtering transactions:", error);
+    toast.error("Failed to filter transactions");
+  } finally {
+    setLoading(false);
+  }
+};
 
   useEffect(() => {
     fetchTransactions();
